@@ -1,3 +1,4 @@
+package lib;
 
 public abstract class AqObject {
     private final double speed;
@@ -57,3 +58,4 @@ public abstract class AqObject {
         this.timeToRandomize = 1;
     }
 }
+

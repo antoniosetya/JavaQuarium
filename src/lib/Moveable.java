@@ -1,7 +1,4 @@
-// File		    : Moveable.java
-// Author	    : 13516122 - Manasye
-// Created on   : 15 April 2018
-// Updated by   :
+package lib;
 
 interface Moveable {
     void move(double x);

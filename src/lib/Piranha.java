@@ -1,7 +1,4 @@
-// File		    : Piranha.java
-// Author	    : 13516122 - Manasye
-// Created on   : 15 April 2018
-// Updated by   :
+package lib;
 
 public class Piranha extends Fish {
     private static final int PIRANHA_SPEED = 40;

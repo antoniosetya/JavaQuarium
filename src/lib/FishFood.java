@@ -1,3 +1,5 @@
+package lib;
+
 public class FishFood extends AqObject implements Moveable {
     private static final int FISH_FOOD_SPEED = 20;
 

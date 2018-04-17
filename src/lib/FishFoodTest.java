@@ -1,3 +1,4 @@
+package lib;
 import static org.junit.Assert.*;
 
 public class FishFoodTest {
