@@ -1,20 +1,15 @@
-// File		    : Object.java
-// Author	    : 13516122 - Manasye
-// Created on   : 15 April 2018
-// Updated by   :
 
 public abstract class AqObject {
-    // movement speed of an object
-    protected final double speed;
-    protected double x, y; // AqObject position
-    protected int TimeToRandomize;
-    protected boolean isAlive;
+    private final double speed;
+    private double x, y; // AqObject position
+    private int timeToRandomize;
+    private boolean isAlive;
 
-    public AqObject(double x, double y, double s) {
-        this.x = x;
-        this.y = y;
+    public AqObject(final double absis, final double ordinat, final double s) {
+        this.x = absis;
+        this.y = ordinat;
         this.speed = s;
-        this.TimeToRandomize = 0;
+        this.timeToRandomize = 0;
         this.isAlive = true;
     }
 
@@ -32,7 +27,7 @@ public abstract class AqObject {
     }
 
     public int getTimeToRandomize() {
-        return TimeToRandomize;
+        return timeToRandomize;
     }
 
     public boolean getIsAlive() {
@@ -40,25 +35,25 @@ public abstract class AqObject {
     }
 
     // Setter
-    public void setX(double x) {
-        this.x = x;
+    public void setX(final double absis) {
+        this.x = absis;
     }
 
-    public void setY(double y) {
-        this.y = y;
+    public void setY(final double ordinat) {
+        this.y = ordinat;
     }
 
-    public void setTimeToRandomize(int timeToRandomize) {
-        TimeToRandomize = timeToRandomize;
+    public void setTimeToRandomize(final int randomTime) {
+        timeToRandomize = randomTime;
     }
 
-    public void setIsAlive(boolean isAlive) {
-        this.isAlive = isAlive;
+    public void setIsAlive(final boolean alive) {
+        this.isAlive = alive;
     }
 
-    public abstract void timeHasPassed(double x);
+    public abstract void timeHasPassed(double absis);
 
-    public void ResetRandomTime() {
-        this.TimeToRandomize = 1;
+    public void resetRandomTime() {
+        this.timeToRandomize = 1;
     }
 }

@@ -4,19 +4,20 @@
 // Updated by   :
 
 public class Piranha extends Fish {
-    private static final int piranhaSpeed = 40;
-    private static final int guppyPrice = 100;
+    private static final int PIRANHA_SPEED = 40;
+    private static final int GUPPY_PRICE = 100;
+    private static final int HALF_FULL_DEGREE = 180;
     private int degOfMovement;
 
     // Constructor
     public Piranha() {
-        super(0, 0, piranhaSpeed);
-        this.degOfMovement = 180;
+        super(0, 0, PIRANHA_SPEED);
+        this.degOfMovement = HALF_FULL_DEGREE;
     }
 
-    public Piranha(double x, double y) {
-        super(x, y, piranhaSpeed);
-        this.degOfMovement = 180;
+    public Piranha(final double x, final double y) {
+        super(x, y, PIRANHA_SPEED);
+        this.degOfMovement = HALF_FULL_DEGREE;
     }
 
     // Getter
@@ -25,18 +26,19 @@ public class Piranha extends Fish {
     }
 
     // Setter
-    public void setDegOfMovement(int degOfMovement) {
-        this.degOfMovement = degOfMovement;
+    public void setDegOfMovement(final int degree) {
+        this.degOfMovement = degree;
     }
 
-//    // Method for piranha eating guppy
+    // Method for piranha eating guppy
 //    public Coin eatGuppy(Guppy g) {
 //        g.eaten();
 //        setFishFull(true);
 //        setTimeBeforeHungry(15);
 //        setTimeBeforeDying(20);
 //        // Create new coin
-//        Coin c1 = new Coin(this.getX(), this.getY(), guppyPrice * (g.getGrowthStage() + 1));
+//        Coin c1 = new Coin(this.getX(), this.getY(), GUPPY_PRIDE *
+// (g.getGrowthStage() + 1));
 //        return c1;
 //    }
 }

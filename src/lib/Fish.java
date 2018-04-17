@@ -1,36 +1,35 @@
-// File		    : Fish.java
-// Author	    : 13516122 - Manasye
-// Created on   : 15 April 2018
-// Updated by   :
-
 import java.util.Random;
-import java.lang.*;
 
-public class Fish extends AqObject implements Moveable{
-    protected int NumEaten; // Fish has eaten how many times
-    protected char facing;
-    protected boolean FishFull; // Guppy is full or not
-    protected int degOfMovement; // Stores degree of movement [0..359]
-    protected double TimeBeforeHungry, TimeBeforeDying, TimeToRandomize; // Timers
-    protected double toX, toY; // If this is set, Fish will move towards X and Y
+public class Fish extends AqObject implements Moveable {
+    private static final int INIT_HUNGRY_TIME = 15;
+    private static final int INIT_DYING_TIME = 20;
+    private static final int QUARTER_DEGREE = 90;
+    private static final int THREE_QUART_DEGREE = 270;
+    private static final int FULL_QUART_DEGREE = 360;
+    private int numEaten; // Fish has eaten how many times
+    private char facing;
+    private boolean fishFull; // Guppy is full or not
+    private int degOfMovement; // Stores degree of movement [0..359]
+    private double timeBeforeHungry, timeBeforeDying, timeToRandomize; // Timers
+    private double toX, toY; // If this is set, Fish will move towards X and Y
 
     // Constructor
-    public Fish(double x, double y, double z) {
+    public Fish(final double x, final double y, final double z) {
         super(x, y, z);
-        NumEaten = 0;
-        TimeToRandomize = 0;
-        FishFull = true;
-        isAlive = true;
+        numEaten = 0;
+        timeToRandomize = 0;
+        fishFull = true;
+        setIsAlive(true);
         facing = 'r';
-        setTimeBeforeHungry(15);
-        setTimeBeforeDying(20);
+        setTimeBeforeHungry(INIT_HUNGRY_TIME);
+        setTimeBeforeDying(INIT_DYING_TIME);
         toX = -1;
         toY = -1;
     }
 
     // Getter
     public int getNumEaten() {
-        return NumEaten;
+        return numEaten;
     }
 
     public char getFacing() {
@@ -38,7 +37,7 @@ public class Fish extends AqObject implements Moveable{
     }
 
     public boolean isFishFull() {
-        return FishFull;
+        return fishFull;
     }
 
     public int getDegOfMovement() {
@@ -46,11 +45,11 @@ public class Fish extends AqObject implements Moveable{
     }
 
     public double getTimeBeforeHungry() {
-        return TimeBeforeHungry;
+        return timeBeforeHungry;
     }
 
     public double getTimeBeforeDying() {
-        return TimeBeforeDying;
+        return timeBeforeDying;
     }
 
     public double getToX() {
@@ -62,43 +61,43 @@ public class Fish extends AqObject implements Moveable{
     }
 
     // Setter
-    public void setNumEaten(int numEaten) {
-        NumEaten = numEaten;
+    public void setNumEaten(final int numOfEaten) {
+        this.numEaten = numOfEaten;
     }
 
-    public void setFacing(char facing) {
-        this.facing = facing;
+    public void setFacing(final char face) {
+        this.facing = face;
     }
 
-    public void setFishFull(boolean fishFull) {
-        FishFull = fishFull;
+    public void setFishFull(final boolean full) {
+        this.fishFull = full;
     }
 
-    public void setDegOfMovement(int degOfMovement) {
-        this.degOfMovement = degOfMovement;
+    public void setDegOfMovement(final int degree) {
+        this.degOfMovement = degree;
     }
 
-    public void setTimeBeforeHungry(double timeBeforeHungry) {
-        TimeBeforeHungry = timeBeforeHungry;
+    public void setTimeBeforeHungry(final double time) {
+        this.timeBeforeHungry = time;
     }
 
-    public void setTimeBeforeDying(double timeBeforeDying) {
-        TimeBeforeDying = timeBeforeDying;
+    public void setTimeBeforeDying(final double time) {
+        this.timeBeforeDying = time;
     }
 
-    public void setTimeToRandomize(double timeToRandomize) {
-        TimeToRandomize = timeToRandomize;
+    public void setTimeToRandomize(final double time) {
+        this.timeToRandomize = time;
     }
 
-    public void setToX(double toX) {
-        this.toX = toX;
+    public void setToX(final double x) {
+        this.toX = x;
     }
 
-    public void setToY(double toY) {
-        this.toY = toY;
+    public void setToY(final double y) {
+        this.toY = y;
     }
 
-    public void moveTowards(double x, double y) {
+    public void moveTowards(final double x, final double y) {
         setToX(x);
         setToY(y);
     }
@@ -108,46 +107,48 @@ public class Fish extends AqObject implements Moveable{
         setToY(-1);
     }
 
-    public void countdownHungry(double dtime) {
-        if(TimeBeforeHungry <= 0) {
-            FishFull = false;
+    public void countdownHungry(final double dtime) {
+        if (timeBeforeHungry <= 0) {
+            fishFull = false;
         } else {
-            TimeBeforeHungry -= dtime;
+            timeBeforeHungry -= dtime;
         }
     }
 
-    public void countdownDying(double dtime) {
-        if(TimeBeforeDying <= 0) {
-            isAlive = false; // Kill the fish
+    public void countdownDying(final double dtime) {
+        if (timeBeforeDying <= 0) {
+            setIsAlive(false); // Kill the fish
         } else {
-            TimeBeforeDying -= dtime;
+            timeBeforeDying -= dtime;
         }
     }
 
-    public void move(double timePassed) {
+    public void move(final double timePassed) {
         double curDegOfMovement;
-        if ((toX != -1) && !FishFull) { // Fish shall move towards (toX, toY) only if it's hungry
+        if ((toX != -1) && !fishFull) {
             curDegOfMovement = Math.atan2(toY - getY(), toX - getX());
-            if (Math.toRadians(curDegOfMovement) >= 90 && Math.toRadians(curDegOfMovement) <= 270)
+            if (Math.toRadians(curDegOfMovement) >= QUARTER_DEGREE
+                    && Math.toRadians(curDegOfMovement) <= THREE_QUART_DEGREE) {
                 setFacing('l');
-            else
+            } else {
                 setFacing('r');
-            this.TimeToRandomize = 0;
-        }
-        else {
-            TimeToRandomize -= timePassed;
-            if (TimeToRandomize <= 0)
-            {   // Time to change face
+            }
+            this.timeToRandomize = 0;
+        } else {
+            timeToRandomize -= timePassed;
+            if (timeToRandomize <= 0) {
                 Random rand = new Random();
                 // Randomize direction
-                int newDirection = rand.nextInt(360);
+                int newDirection = rand.nextInt(FULL_QUART_DEGREE);
                 setDegOfMovement(newDirection);
                 // Set facing of the fish
-                if (newDirection >= 90 && newDirection <= 270)
+                if (newDirection >= QUARTER_DEGREE
+                        && newDirection <= THREE_QUART_DEGREE) {
                     setFacing('l');
-                else
+                } else {
                     setFacing('r');
-                this.ResetRandomTime();
+                }
+                this.resetRandomTime();
             }
             curDegOfMovement = Math.toRadians(degOfMovement);
         }
@@ -156,12 +157,11 @@ public class Fish extends AqObject implements Moveable{
         setY(getY() + getSpeed() * Math.sin(curDegOfMovement) * timePassed);
     }
 
-    public void timeHasPassed(double dtime) {
+    public void timeHasPassed(final double dtime) {
         this.move(dtime);
-        if (FishFull) {
+        if (fishFull) {
             this.countdownHungry(dtime);
-        }
-        else {
+        } else {
             this.countdownDying(dtime);
         }
     }

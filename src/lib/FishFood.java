@@ -1,34 +1,31 @@
-// File		    : FishFood.java
-// Author	    : 13516122 - Manasye
-// Created on   : 15 April 2018
-// Updated by   :
-
-public class FishFood extends AqObject implements Moveable{
-    private static final int fishFoodSpeed = 20;
+public class FishFood extends AqObject implements Moveable {
+    private static final int FISH_FOOD_SPEED = 20;
 
     public FishFood() {
-        super(0, 0, fishFoodSpeed);
-        isAlive = true;
+        super(0, 0, FISH_FOOD_SPEED);
+        setIsAlive(true);
     }
 
-    public FishFood(double x, double y) {
-        super(x, y, fishFoodSpeed);
-        isAlive = true;
+    public FishFood(final double x, final double y) {
+        super(x, y, FISH_FOOD_SPEED);
+        setIsAlive(true);
     }
 
-    public boolean isEqual(FishFood FF) {
-        return (this.getX() == FF.getX()) && (this.getY() == FF.getY()) && (isAlive == FF.isAlive);
+    public boolean isEqual(final FishFood anotherFishFood) {
+        return (this.getX() == anotherFishFood.getX())
+                && (this.getY() == anotherFishFood.getY())
+                && (getIsAlive() == anotherFishFood.getIsAlive());
     }
 
-    public void move(double sec) {
-        setY(getY() + (speed * sec));
+    public void move(final double sec) {
+        setY(getY() + (getSpeed() * sec));
     }
 
-    public void timeHasPassed(double dtime) {
+    public void timeHasPassed(final double dtime) {
         this.move(dtime);
     }
 
     public void eaten() {
-        isAlive = false;
+        setIsAlive(false);
     }
 }
