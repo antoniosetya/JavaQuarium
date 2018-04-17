@@ -1,5 +1,5 @@
 package lib;
 
 interface Moveable {
-    void move(double x);
+	void move(double x);
 }
