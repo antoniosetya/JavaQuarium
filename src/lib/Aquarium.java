@@ -7,13 +7,14 @@ import java.util.Random;
 import javax.imageio.ImageIO;
 import javax.swing.ImageIcon;
 import javax.swing.JLabel;
-import javax.swing.JPanel;
+import javax.swing.JFrame;
 
 public class Aquarium {
 	private int width;
 	private int height;
 	private int coin_val;
 	private JLabel background;
+	private Piranha test;
 	
 	/*
 	 * private List<Guppy> Guppies; private List<Piranha> Piranhas; private List<Coin>
@@ -31,6 +32,7 @@ public class Aquarium {
 		try {
 			BufferedImage back_image = ImageIO.read(new File(System.getProperty("user.dir") + "/bin/assets/background.jpg"));
 			background = new JLabel(new ImageIcon(back_image));
+			background.setBounds(0, 0, width, height);
 		}
 		catch (IOException ex) {
 			System.out.println("Cannot open image!");
@@ -44,6 +46,7 @@ public class Aquarium {
 		try {
 			BufferedImage back_image = ImageIO.read(new File(System.getProperty("user.dir") + "/bin/assets/background.jpg"));
 			background = new JLabel(new ImageIcon(back_image));
+			background.setBounds(0, 0, width, height);
 		}
 		catch (IOException ex) {
 			System.out.println("Cannot open image!");
@@ -76,6 +79,7 @@ public class Aquarium {
 
 	public void initialize() {
 		Random rng = new Random();
+		test = new Piranha(250,250);
 		// Guppies.append(new Guppy(rng.nextFloat() % this.getWidth(), rng.nextFloat() %
 		// this.getHeight()));
 		// Snail = new Snail(rng.nextFloat() % this.getWidth(), this.getHeight());
@@ -98,12 +102,13 @@ public class Aquarium {
 		}
 	}
 	
-	public void drawAquarium(JPanel destination) {
-		destination.add(background);
+	public void drawAquarium(JFrame destination) {
 		/* int i;
 		 * // Invoke Draw methods for each
 		 * for (i = 0;i < 
 		 */
+		test.draw(background);
+		destination.getContentPane().add(background);
 	}
 
 	/*

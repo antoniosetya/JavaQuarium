@@ -1,11 +1,20 @@
 package lib;
-import javax.swing.JPanel;
+
+import java.awt.image.BufferedImage;
+import java.io.File;
+import java.io.IOException;
+import javax.imageio.ImageIO;
+import javax.swing.ImageIcon;
+import javax.swing.JLabel;
+import javax.swing.JFrame;
+import java.lang.Math;
 
 public class Piranha extends Fish {
 	private static final int PIRANHA_SPEED = 40;
 	private static final int GUPPY_PRICE = 100;
 	private static final int HALF_FULL_DEGREE = 180;
 	private int degOfMovement;
+	private JLabel PirSprite = new JLabel();
 
 	// Constructor
 	public Piranha() {
@@ -41,7 +50,24 @@ public class Piranha extends Fish {
 	// }
 	
 	@Override
-	public void draw(JPanel destination) {
-		
+	public void draw(JLabel destination) {
+		String state, filename;
+		if (this.isFishFull()) {
+			state = "n";
+		}
+		else {
+			state = "h";
+		}
+		filename = "Piranha_" + state + "_" + this.getFacing() + ".png";
+		try {
+			BufferedImage sprite = ImageIO.read(new File(System.getProperty("user.dir") + "/bin/assets/" + filename));
+			PirSprite.setIcon(new ImageIcon(sprite));
+			PirSprite.setBounds((int)Math.round(this.getX()),(int)Math.round(this.getY()),84,73);
+			destination.add(PirSprite);
+		}
+		catch (IOException ex) {
+			System.out.println("Cannot load sprite Piranha " + state + " " + this.getFacing());
+			ex.printStackTrace();
+		}
 	}
 }

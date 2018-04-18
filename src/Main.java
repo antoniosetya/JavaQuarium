@@ -6,7 +6,7 @@ import lib.Aquarium;
 public class Main {
 
 	private JFrame frmArkavquarium;
-	private JPanel mainPanel;
+	//private JPanel mainPanel;
 	private Aquarium overworld;
 
 	/**
@@ -31,8 +31,8 @@ public class Main {
 	public Main() {
 		initialize();
 		overworld = new Aquarium();
-		//overworld.initialize();
-		overworld.drawAquarium(mainPanel);
+		overworld.initialize();
+		overworld.drawAquarium(frmArkavquarium);
 	}
 
 	/**
@@ -45,9 +45,9 @@ public class Main {
 		frmArkavquarium.setBounds(100, 100, 640, 480);
 		frmArkavquarium.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
 		frmArkavquarium.getContentPane().setLayout(null);
-		mainPanel = new JPanel();
+		/*mainPanel = new JPanel();
 		mainPanel.setBounds(0, -5, 640, 480);
-		frmArkavquarium.getContentPane().add(mainPanel);
+		frmArkavquarium.getContentPane().add(mainPanel);*/
 	}
 
 }

@@ -1,5 +1,5 @@
 package lib;
-import javax.swing.JPanel;
+import javax.swing.JLabel;
 
 public abstract class AqObject {
 	private final double speed;
@@ -55,7 +55,7 @@ public abstract class AqObject {
 
 	public abstract void timeHasPassed(double absis);
 
-	public abstract void draw(JPanel destination);
+	public abstract void draw(JLabel destination);
 	
 	public void resetRandomTime() {
 		this.timeToRandomize = 1;

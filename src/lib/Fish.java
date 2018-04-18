@@ -1,7 +1,7 @@
 package lib;
 
 import java.util.Random;
-import javax.swing.JPanel;
+import javax.swing.JLabel;
 
 /**
  * The type Fish.
@@ -338,7 +338,7 @@ public class Fish extends AqObject implements Moveable {
 		}
 	}
 	
-	public void draw (JPanel destination) {
+	public void draw (JLabel destination) {
 		
 	}
 }
