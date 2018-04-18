@@ -1,4 +1,5 @@
 package lib;
+import javax.swing.JPanel;
 
 public class FishFood extends AqObject implements Moveable {
 	private static final int FISH_FOOD_SPEED = 20;
@@ -28,5 +29,9 @@ public class FishFood extends AqObject implements Moveable {
 
 	public void eaten() {
 		setIsAlive(false);
+	}
+	
+	public void draw(JPanel destination) {
+		
 	}
 }

@@ -1,6 +1,7 @@
 package lib;
 
 import java.util.Random;
+import javax.swing.JPanel;
 
 /**
  * The type Fish.
@@ -335,5 +336,9 @@ public class Fish extends AqObject implements Moveable {
 		} else {
 			this.countdownDying(dtime);
 		}
+	}
+	
+	public void draw (JPanel destination) {
+		
 	}
 }

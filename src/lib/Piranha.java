@@ -1,4 +1,5 @@
 package lib;
+import javax.swing.JPanel;
 
 public class Piranha extends Fish {
 	private static final int PIRANHA_SPEED = 40;
@@ -38,4 +39,9 @@ public class Piranha extends Fish {
 	// (g.getGrowthStage() + 1));
 	// return c1;
 	// }
+	
+	@Override
+	public void draw(JPanel destination) {
+		
+	}
 }

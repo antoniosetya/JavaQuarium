@@ -1,18 +1,13 @@
 import java.awt.EventQueue;
 import javax.swing.JFrame;
-import javax.swing.JLabel;
 import javax.swing.JPanel;
-import javax.swing.ImageIcon;
-import javax.imageio.ImageIO;
-import java.io.IOException;
-import java.awt.image.BufferedImage;
-import java.io.File;
 import lib.Aquarium;
 
 public class Main {
 
 	private JFrame frmArkavquarium;
-	private Aquarium Overworld;
+	private JPanel mainPanel;
+	private Aquarium overworld;
 
 	/**
 	 * Launch the application.
@@ -35,6 +30,9 @@ public class Main {
 	 */
 	public Main() {
 		initialize();
+		overworld = new Aquarium();
+		//overworld.initialize();
+		overworld.drawAquarium(mainPanel);
 	}
 
 	/**
@@ -47,19 +45,9 @@ public class Main {
 		frmArkavquarium.setBounds(100, 100, 640, 480);
 		frmArkavquarium.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
 		frmArkavquarium.getContentPane().setLayout(null);
-		
-		try {
-			BufferedImage back_image = ImageIO.read(new File(System.getProperty("user.dir") + "/bin/assets/background.jpg"));
-			JLabel picLabel = new JLabel(new ImageIcon(back_image));
-			JPanel panel = new JPanel();
-			panel.setBounds(0, -5, 640, 480);
-			panel.add(picLabel);
-			frmArkavquarium.getContentPane().add(panel);
-		}
-		catch (IOException ex) {
-			System.out.println("Cannot open background image!");
-		}
-		
+		mainPanel = new JPanel();
+		mainPanel.setBounds(0, -5, 640, 480);
+		frmArkavquarium.getContentPane().add(mainPanel);
 	}
 
 }
