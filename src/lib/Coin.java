@@ -10,14 +10,19 @@ public class Coin extends AqObject {
         setValue(0);
     }
 
-    public Coin(final double x, final double y, final int value) {
+    public Coin(final double x, final double y, final int val) {
         super(x, y, COIN_SPEED);
-        setValue(value);
+        setValue(val);
     }
 
     //Getter & Setter
-    public int getValue() {return this.value;}
-    public void setValue(final int value) {this.value = value;}
+    public int getValue() {
+        return this.value;
+    }
+
+    public void setValue(final int val) {
+        this.value = val;
+    }
 
     // Coin movement
     public void move(final double timePassed) {
@@ -33,6 +38,6 @@ public class Coin extends AqObject {
         setIsAlive(false);
     }
 
-    public void draw(JLabel destination) {
+    public void draw(final JLabel destination) {
     }
 }

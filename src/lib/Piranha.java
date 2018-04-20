@@ -6,68 +6,67 @@ import java.io.IOException;
 import javax.imageio.ImageIO;
 import javax.swing.ImageIcon;
 import javax.swing.JLabel;
-import javax.swing.JFrame;
-import java.lang.Math;
 
 public class Piranha extends Fish {
-	private static final int PIRANHA_SPEED = 40;
-	private static final int GUPPY_PRICE = 100;
-	private static final int HALF_FULL_DEGREE = 180;
-	private int degOfMovement;
-	private JLabel PirSprite = new JLabel();
+    private static final int PIRANHA_SPEED = 40;
+    private static final int GUPPY_PRICE = 100;
+    private static final int HALF_FULL_DEGREE = 180;
+    private static final int FIFTEEN = 15;
+    private static final int TWENTY = 20;
+    private static final int WIDTH = 84;
+    private static final int HEIGHT = 73;
+    private int degOfMovement;
+    private JLabel pirSprite = new JLabel();
 
-	// Constructor
-	public Piranha() {
-		super(0, 0, PIRANHA_SPEED);
-		this.degOfMovement = HALF_FULL_DEGREE;
-	}
+    public Piranha() {
+        super(0, 0, PIRANHA_SPEED);
+        this.degOfMovement = HALF_FULL_DEGREE;
+    }
 
-	public Piranha(final double x, final double y) {
-		super(x, y, PIRANHA_SPEED);
-		this.degOfMovement = HALF_FULL_DEGREE;
-	}
+    public Piranha(final double x, final double y) {
+        super(x, y, PIRANHA_SPEED);
+        this.degOfMovement = HALF_FULL_DEGREE;
+    }
 
-	// Getter
-	public int getDegOfMovement() {
-		return degOfMovement;
-	}
+    public int getDegOfMovement() {
+        return degOfMovement;
+    }
 
-	// Setter
-	public void setDegOfMovement(final int degree) {
-		this.degOfMovement = degree;
-	}
+    public void setDegOfMovement(final int degree) {
+        this.degOfMovement = degree;
+    }
 
-	// Method for piranha eating guppy
-	// public Coin eatGuppy(Guppy g) {
-	// g.eaten();
-	// setFishFull(true);
-	// setTimeBeforeHungry(15);
-	// setTimeBeforeDying(20);
-	// // Create new coin
-	// Coin c1 = new Coin(this.getX(), this.getY(), GUPPY_PRIDE *
-	// (g.getGrowthStage() + 1));
-	// return c1;
-	// }
-	
-	@Override
-	public void draw(JLabel destination) {
-		String state, filename;
-		if (this.isFishFull()) {
-			state = "n";
-		}
-		else {
-			state = "h";
-		}
-		filename = "Piranha_" + state + "_" + this.getFacing() + ".png";
-		try {
-			BufferedImage sprite = ImageIO.read(new File(System.getProperty("user.dir") + "/bin/assets/" + filename));
-			PirSprite.setIcon(new ImageIcon(sprite));
-			PirSprite.setBounds((int)Math.round(this.getX()),(int)Math.round(this.getY()),84,73);
-			destination.add(PirSprite);
-		}
-		catch (IOException ex) {
-			System.out.println("Cannot load sprite Piranha " + state + " " + this.getFacing());
-			ex.printStackTrace();
-		}
-	}
+    public Coin eatGuppy(final Guppy g) {
+        g.eaten();
+        setFishFull(true);
+        setTimeBeforeHungry(FIFTEEN);
+        setTimeBeforeDying(TWENTY);
+        Coin c1 = new Coin(this.getX(), this.getY(), GUPPY_PRICE
+                * (g.getGrowthStage() + 1));
+        return c1;
+    }
+
+    @Override
+    public void draw(final JLabel destination) {
+        String state, filename;
+        if (this.isFishFull()) {
+            state = "n";
+        } else {
+            state = "h";
+        }
+        filename = "Piranha_" + state + "_" + this.getFacing() + ".png";
+        try {
+            BufferedImage sprite = ImageIO.read(
+                    new File(System.getProperty("user.dir")
+                            + "/bin/assets/" + filename));
+            pirSprite.setIcon(new ImageIcon(sprite));
+            pirSprite.setBounds((int) Math.round(this.getX()),
+                    (int) Math.round(this.getY()), WIDTH, HEIGHT);
+            destination.add(pirSprite);
+        } catch (IOException ex) {
+            System.out.println("Cannot load sprite Piranha " + state
+                    + " " + this.getFacing());
+            ex.printStackTrace();
+        }
+    }
 }
