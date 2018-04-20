@@ -6,7 +6,6 @@ import java.io.IOException;
 import javax.imageio.ImageIO;
 import javax.swing.ImageIcon;
 import javax.swing.JLabel;
-import javax.swing.JFrame;
 import java.lang.Math;
 
 public class Piranha extends Fish {
@@ -62,7 +61,7 @@ public class Piranha extends Fish {
 		try {
 			BufferedImage sprite = ImageIO.read(new File(System.getProperty("user.dir") + "/bin/assets/" + filename));
 			PirSprite.setIcon(new ImageIcon(sprite));
-			PirSprite.setBounds((int)Math.round(this.getX()),(int)Math.round(this.getY()),84,73);
+			PirSprite.setBounds((int)Math.round(this.getX()) - 42,(int)Math.round(this.getY()) - 37,84,73);
 			destination.add(PirSprite);
 		}
 		catch (IOException ex) {
