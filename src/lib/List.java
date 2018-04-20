@@ -1,3 +1,5 @@
+package lib;
+
 public class List<T> {
 	private class ElmList<T> {
 		private T data;
@@ -67,7 +69,7 @@ public class List<T> {
 	}
 	
 	public void append(T data){
-		ElmList d = new ElmList(data);
+		ElmList<T> d = new ElmList<T>(data);
 		if (isEmpty()){
 			first = d;
 			last = d;
@@ -82,8 +84,8 @@ public class List<T> {
 	}
 	
 	public void remove(T data){
-		ElmList d = first;
-		ElmList dTemp = null;
+		ElmList<T> d = first;
+		ElmList<T> dTemp = null;
   		boolean found = d.getData().equals(data);
   		if (found){
   			d = d.getNext();
@@ -109,8 +111,8 @@ public class List<T> {
   	}
 	
 	public void removeAt(int i){
-		ElmList d = first;
-		ElmList prev = null;
+		ElmList<T> d = first;
+		ElmList<T> prev = null;
 		int index = 0;
 		if ((i >= 0) && (i <= size)) {
 			if (i == 0) {

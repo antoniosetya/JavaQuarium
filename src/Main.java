@@ -1,12 +1,10 @@
 import java.awt.EventQueue;
 import javax.swing.JFrame;
-import javax.swing.JPanel;
 import lib.Aquarium;
 
 public class Main {
 
 	private JFrame frmArkavquarium;
-	//private JPanel mainPanel;
 	private Aquarium overworld;
 
 	/**
@@ -45,9 +43,6 @@ public class Main {
 		frmArkavquarium.setBounds(100, 100, 640, 480);
 		frmArkavquarium.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
 		frmArkavquarium.getContentPane().setLayout(null);
-		/*mainPanel = new JPanel();
-		mainPanel.setBounds(0, -5, 640, 480);
-		frmArkavquarium.getContentPane().add(mainPanel);*/
 	}
 
 }

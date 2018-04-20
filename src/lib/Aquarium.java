@@ -17,9 +17,11 @@ public class Aquarium {
 	private Piranha test;
 	
 	/*
-	 * private List<Guppy> Guppies; private List<Piranha> Piranhas; private List<Coin>
+	 * private List<Guppy> Guppies;  private List<Coin>
 	 * Coins; private List<FishFood> FishFoods; private Siput Snail
 	 */
+	
+	private List<Piranha> Piranhas = new List<Piranha>();
 
 	private static final int col_radius = 20;
 
@@ -79,7 +81,8 @@ public class Aquarium {
 
 	public void initialize() {
 		Random rng = new Random();
-		test = new Piranha(250,250);
+		Piranhas.append(new Piranha(400,250));
+		Piranhas.append(new Piranha(10,10));
 		// Guppies.append(new Guppy(rng.nextFloat() % this.getWidth(), rng.nextFloat() %
 		// this.getHeight()));
 		// Snail = new Snail(rng.nextFloat() % this.getWidth(), this.getHeight());
@@ -107,7 +110,11 @@ public class Aquarium {
 		 * // Invoke Draw methods for each
 		 * for (i = 0;i < 
 		 */
-		test.draw(background);
+		int i;
+		// Invoke Draw on Piranhas
+		for (i = 0; i < Piranhas.getSize(); i++) {
+			Piranhas.get(i).draw(background);
+		}
 		destination.getContentPane().add(background);
 	}
 
