@@ -1,5 +1,12 @@
 package lib;
 
+import java.awt.image.BufferedImage;
+import java.io.File;
+import java.io.IOException;
+import javax.imageio.ImageIO;
+import javax.swing.ImageIcon;
+import javax.swing.JLabel;
+
 public class Guppy extends Fish {
     private static final int GUPPY_SPEED = 35;
     private static final int INITIAL_COIN_TIME = 10;
@@ -11,9 +18,16 @@ public class Guppy extends Fish {
     private static final int FIFTEEN = 15;
     private static final int THREE = 3;
     private static final int TWENTY = 20;
+    private static final int SIXTY_TWO = 62;
+    private static final int FIFTY_SIX = 56;
+    private static final int SEVENTY_NINE = 79;
+    private static final int SEVENTY_ONE = 71;
+    private static final int FORTY_FIFE = 45;
+    private static final int FORTY_TWO = 42;
     private static int numGuppy = 0;
     private int growthStage;
     private double coinDropTime;
+    private JLabel gupSprite = new JLabel();
 
     public Guppy() {
         super(0, 0, GUPPY_SPEED);
@@ -86,5 +100,43 @@ public class Guppy extends Fish {
     // Call this if Guppy is eaten
     public void eaten() {
         setIsAlive(false);
+    }
+
+    public void draw(final JLabel destination) {
+        String state, filename;
+        int width, height;
+        if (this.isFishFull()) {
+            state = "n";
+        } else {
+            state = "h";
+        }
+        filename = this.getGrowthStage() + "_Guppy_" + state
+                + "_" + this.getFacing() + ".png";
+        switch (this.getGrowthStage()) {
+            case TWO:
+                width = SIXTY_TWO;
+                height = FIFTY_SIX;
+                break;
+            case THREE:
+                width = SEVENTY_NINE;
+                height = SEVENTY_ONE;
+                break;
+            default:
+                width = FORTY_FIFE;
+                height = FORTY_TWO;
+        } try {
+            BufferedImage sprite = ImageIO.read(
+                    new File(System.getProperty("user.dir")
+                            + "/bin/assets/" + filename));
+            gupSprite.setIcon(new ImageIcon(sprite));
+            gupSprite.setBounds((int) Math.round(this.getX()) - (width / 2),
+                    (int) Math.round(this.getY()) - (height / 2),
+                    width, height);
+            destination.add(gupSprite);
+        } catch (IOException ex) {
+            System.out.println("Cannot load sprite Piranha "
+                    + state + " " + this.getFacing());
+            ex.printStackTrace();
+        }
     }
 }

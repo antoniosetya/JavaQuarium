@@ -14,14 +14,12 @@ public class Aquarium {
 	private int height;
 	private int coin_val;
 	private JLabel background;
-	private Piranha test;
-	
-	/*
-	 * private List<Guppy> Guppies;  private List<Coin>
-	 * Coins; private List<FishFood> FishFoods; private Siput Snail
-	 */
 	
 	private List<Piranha> Piranhas = new List<Piranha>();
+	private List<Guppy> Guppies = new List<Guppy>();
+	private List<FishFood> FishFoods = new List<FishFood>();
+	private List<Coin> Coins = new List<Coin>();
+	/* private Siput Snail */
 
 	private static final int col_radius = 20;
 
@@ -30,21 +28,17 @@ public class Aquarium {
 		width = 640;
 		height = 480;
 		coin_val = 150;
-		// Initializing background label
-		try {
-			BufferedImage back_image = ImageIO.read(new File(System.getProperty("user.dir") + "/bin/assets/background.jpg"));
-			background = new JLabel(new ImageIcon(back_image));
-			background.setBounds(0, 0, width, height);
-		}
-		catch (IOException ex) {
-			System.out.println("Cannot open image!");
-		}	
+		initializeBackground();
 	}
 
 	public Aquarium(int width, int height) {
 		this.width = width;
 		this.height = height;
 		coin_val = 150;
+		initializeBackground();	
+	}
+	
+	private void initializeBackground() {
 		try {
 			BufferedImage back_image = ImageIO.read(new File(System.getProperty("user.dir") + "/bin/assets/background.jpg"));
 			background = new JLabel(new ImageIcon(back_image));
@@ -52,7 +46,7 @@ public class Aquarium {
 		}
 		catch (IOException ex) {
 			System.out.println("Cannot open image!");
-		}	
+		}
 	}
 
 	public int getWidth() {
@@ -81,48 +75,56 @@ public class Aquarium {
 
 	public void initialize() {
 		Random rng = new Random();
-		Piranhas.append(new Piranha(400,250));
-		Piranhas.append(new Piranha(10,10));
-		// Guppies.append(new Guppy(rng.nextFloat() % this.getWidth(), rng.nextFloat() %
-		// this.getHeight()));
+		Guppies.append(new Guppy(rng.nextInt(this.getWidth() + 1), rng.nextInt(this.getHeight() + 1)));
+		Piranhas.append(new Piranha(rng.nextInt(this.getWidth() + 1), rng.nextInt(this.getHeight() + 1)));
+		FishFoods.append(new FishFood(rng.nextInt(this.getWidth() + 1), rng.nextInt(this.getHeight() + 1)));
+		Coins.append(new Coin(rng.nextInt(this.getWidth() + 1), rng.nextInt(this.getHeight() + 1),100));
 		// Snail = new Snail(rng.nextFloat() % this.getWidth(), this.getHeight());
 	}
 
 	public void createNewObject(char obj) {
 		Random rng = new Random();
-		double x = rng.nextFloat() % this.getWidth();
-		double y = rng.nextFloat() % this.getHeight();
-		// createNewObject(obj,x,y);
+		double x = rng.nextInt(this.getWidth() + 1);
+		double y = rng.nextInt(this.getHeight() + 1);
+		createNewObject(obj,x,y);
 	}
 
 	public void createNewObject(char obj, double x, double y) {
 		if (obj == 'F') {
-			// FishFoods.append(new FishFood(x,y));
+			FishFoods.append(new FishFood(x,y));
 		} else if (obj == 'G') {
-			// Guppies.append(new Guppy(x,y));
+			Guppies.append(new Guppy(x,y));
 		} else if (obj == 'P') {
-			// Piranhas.append(new Piranha(x,y));
+			Piranhas.append(new Piranha(x,y));
 		}
 	}
 	
 	public void drawAquarium(JFrame destination) {
-		/* int i;
-		 * // Invoke Draw methods for each
-		 * for (i = 0;i < 
-		 */
 		int i;
-		// Invoke Draw on Piranhas
+		// Invoke draw on Guppies
+		for (i = 0; i < Guppies.getSize(); i++) {
+			Guppies.get(i).draw(background);
+		}
+		// Invoke draw on Piranhas
 		for (i = 0; i < Piranhas.getSize(); i++) {
 			Piranhas.get(i).draw(background);
+		}
+		// Invoke draw on FishFoods
+		for (i = 0; i < FishFoods.getSize(); i++) {
+			FishFoods.get(i).draw(background);
+		}
+		// Invoke draw on Coins
+		for (i = 0; i < Coins.getSize(); i++) {
+			Coins.get(i).draw(background);
 		}
 		destination.getContentPane().add(background);
 	}
 
-	/*
-	 * private void keepOnAquarium(AqObject obj) { if (obj.getX() < 0) {
-	 * obj.setX(0); } else if (obj.getX() > width) { obj.setX(width); }
-	 * 
-	 * if (obj.getY() < 0) { obj.setY(0); } else if (obj.getY() > height) {
-	 * obj.setY(height); } }
-	 */
+	public void keepOnAquarium(AqObject ao) {
+		
+	}
+	
+	public void timeHasPassed(double sec) {
+		
+	}
 }
