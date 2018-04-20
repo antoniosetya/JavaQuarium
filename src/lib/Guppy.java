@@ -13,7 +13,7 @@ public class Guppy extends Fish {
         NumGuppy++;
     }
 
-    public Guppy(double x, double y) {
+    public Guppy(final double x, final double y) {
         super(x, y,GUPPY_SPEED);
         setGrowthStage(1);
         setCoinTimeLeft(10);
@@ -24,8 +24,8 @@ public class Guppy extends Fish {
     public int getGrowthStage() {return this.GrowthStage;}
     public double getCoinTimeLeft() {return this.CoinDropTime;}
     public static int getNumGuppy() {return NumGuppy;}
-    public void setGrowthStage(int growthstage) {this.GrowthStage = growthstage;}
-    public void setCoinTimeLeft(double coindroptime) {this.CoinDropTime = coindroptime;}
+    public void setGrowthStage(final int growthstage) {this.GrowthStage = growthstage;}
+    public void setCoinTimeLeft(final double coindroptime) {this.CoinDropTime = coindroptime;}
 
     // Method for Guppy to eat, move, and grow
     public void eat() {
@@ -45,7 +45,7 @@ public class Guppy extends Fish {
         return c1;
     }
     
-    public Coin countdownCoin(double dtime) {
+    public Coin countdownCoin(final double dtime) {
         if (getCoinTimeLeft() > 0) {
             this.setCoinTimeLeft(getCoinTimeLeft() - dtime);
             return null;

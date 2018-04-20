@@ -10,21 +10,21 @@ public class Coin extends AqObject {
         setValue(0);
     }
 
-    public Coin(double x, double y, int value) {
+    public Coin(final double x, final double y, final int value) {
         super(x, y, COIN_SPEED);
         setValue(value);
     }
 
     //Getter & Setter
     public int getValue() {return this.value;}
-    public void setValue(int value) {this.value = value;}
+    public void setValue(final int value) {this.value = value;}
 
     // Coin movement
-    public void move(double timePassed) {
+    public void move(final double timePassed) {
         setY(getY() + (COIN_SPEED * timePassed));
     }
 
-    public void timeHasPassed(double dtime) {
+    public void timeHasPassed(final double dtime) {
         move(dtime);
     }
 
