@@ -13,15 +13,20 @@ import javax.swing.ImageIcon;
 import javax.swing.Timer;
 import javax.swing.JButton;
 import javax.swing.BorderFactory;
+import javax.swing.SwingUtilities;
 import lib.Aquarium;
 
 public class MainBoard extends JPanel implements ActionListener {
 
 	private final int FishFoodPrice = 5;
+	private final int GuppyPrice = 100;
+	private final int PiranhaPrice = 120;
 	private final int MenubarOffset = 50;
 	private final int width = 640;
 	private final int height = 480;
 	private final double interval = 0.033;
+	private double alertTimeout = 0;
+	private String alertText;
 	private long numOfCoins = 150;
 	private int egg_price = 100;
 	private int num_egg = 0;
@@ -39,8 +44,8 @@ public class MainBoard extends JPanel implements ActionListener {
 		setDoubleBuffered(true);
 		setLayout(null);
 		
-		loadBackground();
 		initMenubar();
+		loadBackground();
 		
 		overworld.initialize();
 		
@@ -48,11 +53,14 @@ public class MainBoard extends JPanel implements ActionListener {
 		addMouseListener(new MouseAdapter() {
 			@Override
 			public void mousePressed(MouseEvent me) {
-				if (isMouseInPlayArea(me)) {
+				if (SwingUtilities.isLeftMouseButton(me) && isMouseInPlayArea(me)) {
 					if (numOfCoins >= FishFoodPrice) {
 						overworld.createNewObject('F',me.getX(),me.getY() - MenubarOffset);
 						numOfCoins -= FishFoodPrice;
-						updateCoinLabel();
+					}
+					else {
+						alertTimeout = 2;
+						alertText = "Not enough coins!";
 					}
 				}
 			}
@@ -97,6 +105,21 @@ public class MainBoard extends JPanel implements ActionListener {
 		temp.setPreferredSize(temp.getPreferredSize());
 		menuButtons.put("GupButton", temp);
 		add(menuButtons.get("GupButton"));
+		menuButtons.get("GupButton").addMouseListener(new MouseAdapter() {
+			@Override
+			public void mouseReleased(MouseEvent me) {
+				if (SwingUtilities.isLeftMouseButton(me)) {
+					if (numOfCoins >= GuppyPrice) {
+						overworld.createNewObject('G');
+						numOfCoins -= GuppyPrice;
+					}
+					else {
+						alertTimeout = 2;
+						alertText = "Not enough coins!";
+					}
+				}
+			}
+		});
 		
 		temp = new JButton();
 		temp.setEnabled(true);
@@ -106,6 +129,21 @@ public class MainBoard extends JPanel implements ActionListener {
 		temp.setPreferredSize(temp.getPreferredSize());
 		menuButtons.put("PirButton", temp);
 		add(menuButtons.get("PirButton"));
+		menuButtons.get("PirButton").addMouseListener(new MouseAdapter() {
+			@Override
+			public void mouseReleased(MouseEvent me) {
+				if (SwingUtilities.isLeftMouseButton(me)) {
+					if (numOfCoins >= PiranhaPrice) {
+						overworld.createNewObject('P');
+						numOfCoins -= PiranhaPrice;
+					}
+					else {
+						alertTimeout = 2;
+						alertText = "Not enough coins!";
+					}
+				}
+			}
+		});
 		
 		temp = new JButton();
 		temp.setEnabled(true);
@@ -115,6 +153,24 @@ public class MainBoard extends JPanel implements ActionListener {
 		temp.setPreferredSize(temp.getPreferredSize());
 		menuButtons.put("EggButton", temp);
 		add(menuButtons.get("EggButton"));
+		menuButtons.get("EggButton").addMouseListener(new MouseAdapter() {
+			@Override
+			public void mouseReleased(MouseEvent me) {
+				if (SwingUtilities.isLeftMouseButton(me)) {
+					if (numOfCoins >= egg_price) {
+						num_egg++;
+						numOfCoins -= egg_price;
+						egg_price += 100;
+						menuButtons.get("EggButton").setText("<html>Buy Egg<br />" + egg_price + " Coins</html>");
+					}
+					else {
+						alertTimeout = 2;
+						alertText = "Not enough coins!";
+					}
+				}
+			}
+		});
+		
 		initLabels();
 	}
 	
@@ -123,6 +179,12 @@ public class MainBoard extends JPanel implements ActionListener {
 		super.paintComponent(g);
 		g.drawImage(background,0,MenubarOffset,this);
 		overworld.drawAquarium(g,MenubarOffset,this);
+		updateCoinLabel();
+		updateEggLabel();
+		if (alertTimeout > 0) {
+			g.drawString(alertText,245,15);
+			alertTimeout -= interval;
+		}
 	}
 	
 	@Override
