@@ -7,6 +7,8 @@ public class Coin extends AqObject {
     private int value;
     private static final int COIN_SPEED = 75;
     private static final int THIRTY = 30;
+    private static final int THIRTY_TWO = 32;
+    private static final int TWENTY_SIX = 26;
     private Image coinSprite;
 
     public Coin() {
@@ -17,12 +19,21 @@ public class Coin extends AqObject {
 
     public Coin(final double x, final double y, final int val) {
         super(x, y, COIN_SPEED, THIRTY, THIRTY);
-        setValue(value);
+        setValue(val);
+        if (val >= 100) {
+        	setWidth(THIRTY_TWO);
+        	setHeight(TWENTY_SIX);
+        }
         loadSprite();
     }
 
     private void loadSprite() {
-        coinSprite = (new ImageIcon("./bin/assets/Coin.png")).getImage();
+    	if (value >= 100) {
+    		coinSprite = (new ImageIcon("./bin/assets/Diamond.png")).getImage();
+    	}
+    	else {
+    		coinSprite = (new ImageIcon("./bin/assets/Coin.png")).getImage();
+    	}
     }
 
     //Getter & Setter

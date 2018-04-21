@@ -9,7 +9,6 @@ import java.lang.Math;
 public class Aquarium {
 	private int width;
 	private int height;
-	private int coin_val;
 	
 	private List<Piranha> Piranhas = new List<Piranha>();
 	private List<Guppy> Guppies = new List<Guppy>();
@@ -21,13 +20,11 @@ public class Aquarium {
 	public Aquarium() {
 		width = 640;
 		height = 480;
-		coin_val = 150;
 	}
 
 	public Aquarium(int width, int height) {
 		this.width = width;
 		this.height = height;
-		coin_val = 150;
 	}
 	
 
@@ -39,8 +36,21 @@ public class Aquarium {
 		return height;
 	}
 
-	public int getCoinVal() {
-		return coin_val;
+
+	public List<Piranha> getPiranhas() {
+		return Piranhas;
+	}
+
+	public List<Guppy> getGuppies() {
+		return Guppies;
+	}
+
+	public List<FishFood> getFishFoods() {
+		return FishFoods;
+	}
+
+	public List<Coin> getCoins() {
+		return Coins;
 	}
 
 	public void setWidth(int width) {
@@ -51,16 +61,12 @@ public class Aquarium {
 		this.height = height;
 	}
 
-	public void setCoinVal(int coin_val) {
-		this.coin_val = coin_val;
-	}
-
 	public void initialize() {
 		Random rng = new Random();
 		Guppies.append(new Guppy(rng.nextInt(this.getWidth() + 1), rng.nextInt(this.getHeight() + 1)));
-		Piranhas.append(new Piranha(rng.nextInt(this.getWidth() + 1), rng.nextInt(this.getHeight() + 1)));
-		Coins.append(new Coin(rng.nextInt(this.getWidth() + 1), rng.nextInt(this.getHeight() + 1),100));
-		// Snail = new Snail(rng.nextFloat() % this.getWidth(), this.getHeight());
+		//Piranhas.append(new Piranha(rng.nextInt(this.getWidth() + 1), rng.nextInt(this.getHeight() + 1)));
+		//Coins.append(new Coin(rng.nextInt(this.getWidth() + 1), rng.nextInt(this.getHeight() + 1),100));
+		//Snail = new Snail(rng.nextFloat() % this.getWidth(), this.getHeight());
 	}
 
 	public void createNewObject(char obj) {
@@ -152,6 +158,7 @@ public class Aquarium {
 	public void timeHasPassed(double sec) {
 		int i, j, optLoc;
 		double shortest, temp;
+		Coin droppedCoin;
 		/* --- INVOKING timeHasPassed --- */
 		// Invoke timeHasPassed for Guppy
 		for (i = 0; i < Guppies.getSize(); i++) {
@@ -175,6 +182,11 @@ public class Aquarium {
 				// Move the Guppy
 				Guppies.get(i).timeHasPassed(sec);
 				keepOnAquarium(Guppies.get(i));
+				// Special for Guppy : dropping coins every fixed interval
+				droppedCoin = Guppies.get(i).countdownCoin(sec);
+				if (droppedCoin != null) {
+					Coins.append(droppedCoin);
+				}
 			}
 			else {
 				break;
@@ -183,6 +195,22 @@ public class Aquarium {
 		// Invoke timeHasPassed for Piranhas
 		for (i = 0; i < Piranhas.getSize(); i++) {
 			if (Piranhas.get(i) != null) {
+				// Determines if there's nearby Guppy and Piranha is hungry
+				if (!Piranhas.get(i).isFishFull() && !Guppies.isEmpty()) {
+					j = 0;
+					optLoc = 0;
+					shortest = Euclidean(Piranhas.get(i).getX(), Piranhas.get(i).getY(),
+							Guppies.get(j).getX(), Guppies.get(j).getY());
+					for (j = 1;j < FishFoods.getSize(); j++) {
+						temp = Euclidean(Piranhas.get(i).getX(), Piranhas.get(i).getY(),
+								Guppies.get(j).getX(), Guppies.get(j).getY());
+						if (shortest > temp) {
+							shortest = temp;
+							optLoc = j;
+						}
+					}
+					Piranhas.get(i).moveTowards(Guppies.get(optLoc));
+				}
 				Piranhas.get(i).timeHasPassed(sec);
 				keepOnAquarium(Piranhas.get(i));
 			}
@@ -219,7 +247,7 @@ public class Aquarium {
 			if (!Guppies.get(i).isFishFull()) {
 				// Loop FishFood to see whether a collision has happened
 				for (j = 0;j < FishFoods.getSize();j++) {
-					if (Guppies.get(i).getHitBox().intersects(FishFoods.get(j).getHitBox())) {
+					if (FishFoods.get(j).getIsAlive() && Guppies.get(i).getHitBox().intersects(FishFoods.get(j).getHitBox())) {
 						Guppies.get(i).eat();
 						FishFoods.get(j).eaten();
 						break;
@@ -228,10 +256,41 @@ public class Aquarium {
 			}
 		}
 		
+		// For Piranhas and Guppy
+		for (i = 0;i < Piranhas.getSize();i++) {
+			if (!Piranhas.get(i).isFishFull()) {
+				// Loop FishFood to see whether a collision has happened
+				for (j = 0;j < Guppies.getSize();j++) {
+					if (Guppies.get(j).getIsAlive() && Piranhas.get(i).getHitBox().intersects(Guppies.get(j).getHitBox())) {
+						droppedCoin = Piranhas.get(i).eatGuppy(Guppies.get(j));
+						Coins.append(droppedCoin);
+						Guppies.get(i).eaten();
+						break;
+					}
+				}
+			}
+		}
 		/* --- "GARBAGE CLEANER" -- */
 		cleanList(Guppies);
 		cleanList(Piranhas);
 		cleanList(FishFoods);
 		cleanList(Coins);
+	}
+	
+	public int CollectCoin(int x, int y) {
+		int value = -1;
+		boolean stop = false;
+		int i = 0;
+		while ((i < Coins.getSize()) && !stop) {
+			if (Coins.get(i).getHitBox().contains(x,y)) {
+				value = Coins.get(i).getValue();
+				Coins.get(i).collected();
+				stop = true;
+			}
+			else {
+				i++;
+			}
+		}
+		return value;
 	}
 }

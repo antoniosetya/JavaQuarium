@@ -68,6 +68,7 @@ public class Guppy extends Fish {
     // Method for Guppy to eat, move, and grow
     public void eat() {
         setFishFull(true);
+        setNumEaten(getNumEaten() + 1);
         if (((getNumEaten() > SIX) && (getGrowthStage() == TWO))
                 || ((getNumEaten() > THREE) && (getGrowthStage() == ONE))) {
             grow();
