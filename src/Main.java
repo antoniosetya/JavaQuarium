@@ -3,13 +3,11 @@ import javax.swing.JFrame;
 
 public class Main extends JFrame {
 
-	/**
-	 * 
-	 */
 	private static final long serialVersionUID = 4648172894076113183L;
 	
 	public Main() {
-		add(new MainBoard());
+		MainBoard main_board = new MainBoard();
+		getContentPane().add(main_board);
 		setResizable(false);
 		pack();
 		setTitle("ArkavQuarium");

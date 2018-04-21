@@ -122,6 +122,9 @@ public class List<T> {
                     index++;
                 }
                 prev.setNext(d.getNext());
+                if (index == size - 1) {
+                	last = prev;
+                }
             }
             this.size--;
         }
@@ -130,10 +133,29 @@ public class List<T> {
     public T get(final int i) {
         ElmList<T> d = first;
         int index = 0;
-        while (!(index == i)) {
+        while (!(index == i) && d != null) {
             d = d.getNext();
             index++;
         }
-        return d.getData();
+        if (d == null) {
+        	return null;
+        }
+        else {
+        	return d.getData();
+        } 
+    }
+    
+    public static void main(String[] args) {
+    	List<Integer> test = new List<Integer>();
+    	test.append(5);
+    	test.append(10);
+    	test.append(15);
+    	test.removeAt(2);
+    	test.append(20);
+    	test.append(25);
+    	test.removeAt(0);
+    	for (int i = 0;i < test.getSize();i++) {
+    		System.out.println(test.get(i));
+    	}
     }
 }

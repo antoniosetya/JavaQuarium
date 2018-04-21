@@ -60,7 +60,6 @@ public class Aquarium {
 		Random rng = new Random();
 		Guppies.append(new Guppy(rng.nextInt(this.getWidth() + 1), rng.nextInt(this.getHeight() + 1)));
 		Piranhas.append(new Piranha(rng.nextInt(this.getWidth() + 1), rng.nextInt(this.getHeight() + 1)));
-		FishFoods.append(new FishFood(rng.nextInt(this.getWidth() + 1), rng.nextInt(this.getHeight() + 1)));
 		Coins.append(new Coin(rng.nextInt(this.getWidth() + 1), rng.nextInt(this.getHeight() + 1),100));
 		// Snail = new Snail(rng.nextFloat() % this.getWidth(), this.getHeight());
 	}
@@ -82,40 +81,48 @@ public class Aquarium {
 		}
 	}
 	
-	public void drawAquarium(Graphics g, JPanel io) {
+	public void drawAquarium(Graphics g, int offset, JPanel io) {
 		int i;
 		Image temp;
 		// Invoke draw on Guppies
 		for (i = 0; i < Guppies.getSize(); i++) {
-			temp = Guppies.get(i).draw();
-			g.drawImage(temp,
-					(int)(Guppies.get(i).getX() - (temp.getWidth(io) / 2)),
-							(int)(Guppies.get(i).getY() - (temp.getHeight(io) / 2))
-							, io);
+			if (Guppies.get(i) != null) {
+				temp = Guppies.get(i).draw();
+				g.drawImage(temp,
+						(int)(Guppies.get(i).getX() - (temp.getWidth(io) / 2)),
+								(int)(Guppies.get(i).getY() - (temp.getHeight(io) / 2) + offset)
+								, io);
+			}
 		}
 		// Invoke draw on Piranhas
 		for (i = 0; i < Piranhas.getSize(); i++) {
-			temp = Piranhas.get(i).draw();
-			g.drawImage(temp,
-					(int)(Piranhas.get(i).getX() - (temp.getWidth(io) / 2)),
-							(int)(Piranhas.get(i).getY() - (temp.getHeight(io) / 2))
-							, io);
+			if (Piranhas.get(i) != null) {
+				temp = Piranhas.get(i).draw();
+				g.drawImage(temp,
+						(int)(Piranhas.get(i).getX() - (temp.getWidth(io) / 2)),
+								(int)(Piranhas.get(i).getY() - (temp.getHeight(io) / 2) + offset)
+								, io);
+			}
 		}
 		// Invoke draw on FishFoods
 		for (i = 0; i < FishFoods.getSize(); i++) {
-			temp = FishFoods.get(i).draw();
-			g.drawImage(temp,
-					(int)(FishFoods.get(i).getX() - (temp.getWidth(io) / 2)),
-							(int)(FishFoods.get(i).getY() - (temp.getHeight(io) / 2))
-							, io);
+			if (FishFoods.get(i) != null) {
+				temp = FishFoods.get(i).draw();
+				g.drawImage(temp,
+						(int)(FishFoods.get(i).getX() - (temp.getWidth(io) / 2)),
+								(int)(FishFoods.get(i).getY() - (temp.getHeight(io) / 2) + offset)
+								, io);
+			}
 		}
 		// Invoke draw on Coins
 		for (i = 0; i < Coins.getSize(); i++) {
-			temp = Coins.get(i).draw();
-			g.drawImage(temp,
-					(int)(Coins.get(i).getX() - (temp.getWidth(io) / 2)),
-							(int)(Coins.get(i).getY() - (temp.getHeight(io) / 2))
-							, io);
+			if (Coins.get(i) != null) {
+				temp = Coins.get(i).draw();
+				g.drawImage(temp,
+						(int)(Coins.get(i).getX() - (temp.getWidth(io) / 2)),
+								(int)(Coins.get(i).getY() - (temp.getHeight(io) / 2) + offset)
+								, io);
+			}
 		}
 	}
 
@@ -127,27 +134,68 @@ public class Aquarium {
 		else if(ao.getY() > height) ao.setY(height);
 	}
 	
+	private void cleanList(List<? extends AqObject> Lao) {
+		int i = 0;
+		while ((i < Lao.getSize()) && (Lao.get(i) != null)) {
+			if (!Lao.get(i).getIsAlive()) {
+				Lao.removeAt(i);
+			}
+			else {
+				i++;
+			}
+		}
+	}
+	
 	public void timeHasPassed(double sec) {
 		int i;
+		/* --- INVOKING timeHasPassed --- */
 		// Invoke timeHasPassed for Guppy
 		for (i = 0; i < Guppies.getSize(); i++) {
-			Guppies.get(i).timeHasPassed(sec);
-			keepOnAquarium(Guppies.get(i));
+			if (Guppies.get(i) != null) {
+				Guppies.get(i).timeHasPassed(sec);
+				keepOnAquarium(Guppies.get(i));
+			}
+			else {
+				break;
+			}
 		}
 		// Invoke timeHasPassed for Piranhas
 		for (i = 0; i < Piranhas.getSize(); i++) {
-			Piranhas.get(i).timeHasPassed(sec);
-			keepOnAquarium(Piranhas.get(i));
+			if (Piranhas.get(i) != null) {
+				Piranhas.get(i).timeHasPassed(sec);
+				keepOnAquarium(Piranhas.get(i));
+			}
+			else {
+				break;
+			}
 		}
 		// Invoke timeHasPassed for FishFoods
 		for (i = 0; i < FishFoods.getSize(); i++) {
-			FishFoods.get(i).timeHasPassed(sec);
-			keepOnAquarium(FishFoods.get(i));
+			if (FishFoods.get(i) != null) {
+				FishFoods.get(i).timeHasPassed(sec);
+				if (FishFoods.get(i).getY() >= height) {
+					FishFoods.get(i).setIsAlive(false);
+				}
+			}
+			else {
+				break;
+			}
 		}
 		// Invoke timeHasPassed for Coins
-		for (i = 0; i < FishFoods.getSize(); i++) {
-			Coins.get(i).timeHasPassed(sec);
-			keepOnAquarium(Coins.get(i));
+		for (i = 0; i < Coins.getSize(); i++) {
+			if (Coins.get(i) != null) {
+				Coins.get(i).timeHasPassed(sec);
+				keepOnAquarium(Coins.get(i));
+			}
+			else {
+				break;
+			}
 		}
+		
+		/* --- "GARBAGE CLEANER" -- */
+		cleanList(Guppies);
+		cleanList(Piranhas);
+		cleanList(FishFoods);
+		cleanList(Coins);
 	}
 }
