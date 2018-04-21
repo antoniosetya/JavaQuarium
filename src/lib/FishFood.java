@@ -1,15 +1,11 @@
 package lib;
 
-import java.awt.image.BufferedImage;
-import java.io.File;
-import java.io.IOException;
-import javax.imageio.ImageIO;
 import javax.swing.ImageIcon;
-import javax.swing.JLabel;
+import java.awt.Image;
 
 public class FishFood extends AqObject implements Moveable {
 	private static final int FISH_FOOD_SPEED = 20;
-	private JLabel FFSprite = new JLabel();
+	private Image FFSprite;
 
 	public FishFood() {
 		super(0, 0, FISH_FOOD_SPEED);
@@ -24,14 +20,7 @@ public class FishFood extends AqObject implements Moveable {
 	}
 
 	private void loadSprite() {
-		try {
-			BufferedImage sprite = ImageIO.read(new File(System.getProperty("user.dir") + "/bin/assets/FishFood.png"));
-			FFSprite.setIcon(new ImageIcon(sprite));
-		}
-		catch (IOException ex) {
-			System.out.println("Cannot load sprite FishFood");
-			ex.printStackTrace();
-		}
+		FFSprite = (new ImageIcon("./bin/assets/FishFood.png")).getImage();
 	}
 	
 	public boolean isEqual(final FishFood anotherFishFood) {
@@ -51,8 +40,7 @@ public class FishFood extends AqObject implements Moveable {
 		setIsAlive(false);
 	}
 	
-	public void draw(JLabel destination) {
-		FFSprite.setBounds((int)Math.round(this.getX()) - 20,(int)Math.round(this.getY()) - 20,40,40);
-		destination.add(FFSprite);
+	public Image draw() {
+		return FFSprite;
 	}
 }
