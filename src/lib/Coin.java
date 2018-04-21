@@ -6,18 +6,17 @@ import javax.swing.ImageIcon;
 public class Coin extends AqObject {
     private int value;
     private static final int COIN_SPEED = 75;
-    private static final int TWENTY = 20;
-    private static final int FORTY = 40;
+    private static final int THIRTY = 30;
     private Image coinSprite;
 
     public Coin() {
-        super(0, 0, COIN_SPEED);
+        super(0, 0, COIN_SPEED, THIRTY, THIRTY);
         setValue(0);
         loadSprite();
     }
 
     public Coin(final double x, final double y, final int val) {
-        super(x, y, COIN_SPEED);
+        super(x, y, COIN_SPEED, THIRTY, THIRTY);
         setValue(value);
         loadSprite();
     }
@@ -38,6 +37,7 @@ public class Coin extends AqObject {
     // Coin movement
     public void move(final double timePassed) {
         setY(getY() + (COIN_SPEED * timePassed));
+        updateHitBox();
     }
 
     public void timeHasPassed(final double dtime) {

@@ -14,23 +14,33 @@ public class Guppy extends Fish {
     private static final int FIFTEEN = 15;
     private static final int THREE = 3;
     private static final int TWENTY = 20;
+    private static final int FIFTY_THREE = 53;
+    private static final int FORTY_SEVEN = 47;
+    private static final int SEVENTY_ONE = 71;
+    private static final int SIXTY_THREE = 63;
+    private static final int THIRTY_SIX = 36;
+    private static final int THIRTY_TWO = 32;
     private static int numGuppy = 0;
     private int growthStage;
     private double coinDropTime;
     private Image GupSprite;
 
     public Guppy() {
-        super(0, 0, GUPPY_SPEED);
+        super(0, 0, GUPPY_SPEED,THIRTY_SIX,THIRTY_TWO);
         setGrowthStage(INITIAL_GROWTH_STAGE);
         setCoinTimeLeft(INITIAL_COIN_TIME);
         numGuppy++;
+        // Flush initial Image to GupSprite
+        draw();
     }
 
     public Guppy(final double x, final double y) {
-        super(x, y, GUPPY_SPEED);
+        super(x, y, GUPPY_SPEED, THIRTY_SIX,THIRTY_TWO);
         setGrowthStage(INITIAL_GROWTH_STAGE);
         setCoinTimeLeft(INITIAL_COIN_TIME);
         numGuppy++;
+        // Flush initial Image to GupSprite
+        draw();
     }
 
     //Getter & Setter
@@ -68,6 +78,19 @@ public class Guppy extends Fish {
 
     public void grow() {
         setGrowthStage(getGrowthStage() + 1);
+        switch (this.getGrowthStage()) {
+	        case TWO:
+	            width = FIFTY_THREE;
+	            height = FORTY_SEVEN;
+	            break;
+	        case THREE:
+	            width = SEVENTY_ONE;
+	            height = SIXTY_THREE;
+	            break;
+	        default:
+	            width = THIRTY_SIX;
+	            height = THIRTY_TWO;
+        } 
     }
 
     // Coin

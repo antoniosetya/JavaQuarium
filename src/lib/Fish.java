@@ -49,9 +49,9 @@ public abstract class Fish extends AqObject implements Moveable {
 	 */
 	private double timeBeforeHungry, timeBeforeDying, timeToRandomize;
 	/**
-	 * Variables describing fish go to what coordinates.
+	 * Variables describing fish to go to what object.
 	 */
-	private double toX, toY;
+	private AqObject toObj;
 
 	/**
 	 * Instantiates a new Fish.
@@ -63,8 +63,8 @@ public abstract class Fish extends AqObject implements Moveable {
 	 * @param z
 	 *            the z
 	 */
-	public Fish(final double x, final double y, final double z) {
-		super(x, y, z);
+	public Fish(final double x, final double y, final double z, final int width, final int height) {
+		super(x, y, z, width, height);
 		numEaten = 0;
 		fishFull = true;
 		setIsAlive(true);
@@ -129,21 +129,12 @@ public abstract class Fish extends AqObject implements Moveable {
 	}
 
 	/**
-	 * Gets to x.
+	 * Getter for toObj.
 	 *
-	 * @return the to x
+	 * @return the toObj
 	 */
-	public double getToX() {
-		return toX;
-	}
-
-	/**
-	 * Gets to y.
-	 *
-	 * @return the to y
-	 */
-	public double getToY() {
-		return toY;
+	public AqObject getToObj() {
+		return toObj;
 	}
 
 	public double getTimeToRandomize() {
@@ -222,23 +213,13 @@ public abstract class Fish extends AqObject implements Moveable {
 	}
 
 	/**
-	 * Sets to x.
+	 * Sets toObj.
 	 *
 	 * @param x
-	 *            the x
+	 *            the obj
 	 */
-	public void setToX(final double x) {
-		this.toX = x;
-	}
-
-	/**
-	 * Sets to y.
-	 *
-	 * @param y
-	 *            the y
-	 */
-	public void setToY(final double y) {
-		this.toY = y;
+	public void setToObj(final AqObject obj) {
+		this.toObj = obj;
 	}
 
 	/**
@@ -249,17 +230,15 @@ public abstract class Fish extends AqObject implements Moveable {
 	 * @param y
 	 *            the y
 	 */
-	public void moveTowards(final double x, final double y) {
-		setToX(x);
-		setToY(y);
+	public void moveTowards(final AqObject obj) {
+		this.toObj = obj;
 	}
 
 	/**
 	 * Move randomly.
 	 */
 	public void moveRandomly() {
-		setToX(-1);
-		setToY(-1);
+		this.toObj = null;
 	}
 
 	/**
@@ -300,16 +279,21 @@ public abstract class Fish extends AqObject implements Moveable {
 	 */
 	public void move(final double timePassed) {
 		double curDegOfMovement;
-		if ((toX != -1) && !fishFull) {
-			curDegOfMovement = Math.atan2(toY - getY(), toX - getX());
-			System.out.println(curDegOfMovement);
-			if (Math.toDegrees(curDegOfMovement) >= QUARTER_DEGREE
-					&& Math.toDegrees(curDegOfMovement) <= THREE_QUART_DEGREE) {
-				setFacing('l');
-			} else {
-				setFacing('r');
+		if ((toObj != null) && !fishFull) {
+			if (toObj.getIsAlive()) {
+				curDegOfMovement = Math.atan2(toObj.getY() - getY(), toObj.getX() - getX());
+				if (Math.toDegrees(curDegOfMovement) >= QUARTER_DEGREE
+						&& Math.toDegrees(curDegOfMovement) <= THREE_QUART_DEGREE) {
+					setFacing('l');
+				} else {
+					setFacing('r');
+				}
+				this.timeToRandomize = 0;				
 			}
-			this.timeToRandomize = 0;
+			else {
+				moveRandomly();
+				curDegOfMovement = Math.toRadians(degOfMovement);
+			}
 		} else {
 			setTimeToRandomize(getTimeToRandomize() - timePassed);
 			if (getTimeToRandomize() <= 0) {
@@ -330,6 +314,7 @@ public abstract class Fish extends AqObject implements Moveable {
 		// Set movement based on direction
 		setX(getX() + (getSpeed() * Math.cos(curDegOfMovement) * timePassed));
 		setY(getY() + (getSpeed() * Math.sin(curDegOfMovement) * timePassed));
+		updateHitBox();
 	}
 
 	/**
@@ -338,11 +323,11 @@ public abstract class Fish extends AqObject implements Moveable {
 	 */
 	public void timeHasPassed(final double dtime) {
 		this.move(dtime);
-		/*if (fishFull) {
+		if (fishFull) {
 			this.countdownHungry(dtime);
 		} else {
 			this.countdownDying(dtime);
-		} */
+		}
 	}
 	
 	public abstract Image draw ();

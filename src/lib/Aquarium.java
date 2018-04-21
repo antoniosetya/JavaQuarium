@@ -4,6 +4,7 @@ import java.util.Random;
 import java.awt.Graphics;
 import java.awt.Image;
 import javax.swing.JPanel;
+import java.lang.Math;
 
 public class Aquarium {
 	private int width;
@@ -15,8 +16,6 @@ public class Aquarium {
 	private List<FishFood> FishFoods = new List<FishFood>();
 	private List<Coin> Coins = new List<Coin>();
 	/* private Siput Snail */
-
-	private static final int col_radius = 20;
 
 	// Constructors
 	public Aquarium() {
@@ -125,7 +124,11 @@ public class Aquarium {
 			}
 		}
 	}
-
+	
+	private static double Euclidean(double x1, double y1, double x2, double y2) {
+		return(Math.sqrt(Math.pow(x2 - x1,2) + Math.pow(y2 - y1,2)));
+	}
+	
 	public void keepOnAquarium(AqObject ao) {
 		if (ao.getX() < 0) ao.setX(0);
 		else if(ao.getX() > width) ao.setX(width);
@@ -147,11 +150,29 @@ public class Aquarium {
 	}
 	
 	public void timeHasPassed(double sec) {
-		int i;
+		int i, j, optLoc;
+		double shortest, temp;
 		/* --- INVOKING timeHasPassed --- */
 		// Invoke timeHasPassed for Guppy
 		for (i = 0; i < Guppies.getSize(); i++) {
 			if (Guppies.get(i) != null) {
+				// Determines if there's nearby fish foods and Guppy is hungry
+				if (!Guppies.get(i).isFishFull() && !FishFoods.isEmpty()) {
+					j = 0;
+					optLoc = 0;
+					shortest = Euclidean(Guppies.get(i).getX(), Guppies.get(i).getY(),
+							FishFoods.get(j).getX(), FishFoods.get(j).getY());
+					for (j = 1;j < FishFoods.getSize(); j++) {
+						temp = Euclidean(Guppies.get(i).getX(), Guppies.get(i).getY(),
+								FishFoods.get(j).getX(), FishFoods.get(j).getY());
+						if (shortest > temp) {
+							shortest = temp;
+							optLoc = j;
+						}
+					}
+					Guppies.get(i).moveTowards(FishFoods.get(optLoc));
+				}
+				// Move the Guppy
 				Guppies.get(i).timeHasPassed(sec);
 				keepOnAquarium(Guppies.get(i));
 			}
@@ -189,6 +210,21 @@ public class Aquarium {
 			}
 			else {
 				break;
+			}
+		}
+		
+		/* --- COLLISION DETECTION --- */
+		// For Guppy and FishFood
+		for (i = 0;i < Guppies.getSize();i++) {
+			if (!Guppies.get(i).isFishFull()) {
+				// Loop FishFood to see whether a collision has happened
+				for (j = 0;j < FishFoods.getSize();j++) {
+					if (Guppies.get(i).getHitBox().intersects(FishFoods.get(j).getHitBox())) {
+						Guppies.get(i).eat();
+						FishFoods.get(j).eaten();
+						break;
+					}
+				}
 			}
 		}
 		

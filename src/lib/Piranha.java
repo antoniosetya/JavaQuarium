@@ -8,16 +8,16 @@ public class Piranha extends Fish {
     private static final int GUPPY_PRICE = 100;
     private static final int FIFTEEN = 15;
     private static final int TWENTY = 20;
-    private static final int WIDTH = 84;
-    private static final int HEIGHT = 73;
+    private static final int WIDTH = 76;
+    private static final int HEIGHT = 64;
     private Image pirSprite;
 
     public Piranha() {
-        super(0, 0, PIRANHA_SPEED);
+        super(0, 0, PIRANHA_SPEED, WIDTH, HEIGHT);
     }
 
     public Piranha(final double x, final double y) {
-        super(x, y, PIRANHA_SPEED);
+        super(x, y, PIRANHA_SPEED, WIDTH, HEIGHT);
     }
 
     public Coin eatGuppy(final Guppy g) {
