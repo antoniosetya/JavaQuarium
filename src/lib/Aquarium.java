@@ -1,19 +1,14 @@
 package lib;
 
-import java.awt.image.BufferedImage;
-import java.io.File;
-import java.io.IOException;
 import java.util.Random;
-import javax.imageio.ImageIO;
-import javax.swing.ImageIcon;
-import javax.swing.JLabel;
-import javax.swing.JFrame;
+import java.awt.Graphics;
+import java.awt.Image;
+import javax.swing.JPanel;
 
 public class Aquarium {
 	private int width;
 	private int height;
 	private int coin_val;
-	private JLabel background;
 	
 	private List<Piranha> Piranhas = new List<Piranha>();
 	private List<Guppy> Guppies = new List<Guppy>();
@@ -28,26 +23,14 @@ public class Aquarium {
 		width = 640;
 		height = 480;
 		coin_val = 150;
-		initializeBackground();
 	}
 
 	public Aquarium(int width, int height) {
 		this.width = width;
 		this.height = height;
 		coin_val = 150;
-		initializeBackground();	
 	}
 	
-	private void initializeBackground() {
-		try {
-			BufferedImage back_image = ImageIO.read(new File(System.getProperty("user.dir") + "/bin/assets/background.jpg"));
-			background = new JLabel(new ImageIcon(back_image));
-			background.setBounds(0, 0, width, height);
-		}
-		catch (IOException ex) {
-			System.out.println("Cannot open image!");
-		}
-	}
 
 	public int getWidth() {
 		return width;
@@ -99,32 +82,72 @@ public class Aquarium {
 		}
 	}
 	
-	public void drawAquarium(JFrame destination) {
+	public void drawAquarium(Graphics g, JPanel io) {
 		int i;
+		Image temp;
 		// Invoke draw on Guppies
 		for (i = 0; i < Guppies.getSize(); i++) {
-			Guppies.get(i).draw(background);
+			temp = Guppies.get(i).draw();
+			g.drawImage(temp,
+					(int)(Guppies.get(i).getX() - (temp.getWidth(io) / 2)),
+							(int)(Guppies.get(i).getY() - (temp.getHeight(io) / 2))
+							, io);
 		}
 		// Invoke draw on Piranhas
 		for (i = 0; i < Piranhas.getSize(); i++) {
-			Piranhas.get(i).draw(background);
+			temp = Piranhas.get(i).draw();
+			g.drawImage(temp,
+					(int)(Piranhas.get(i).getX() - (temp.getWidth(io) / 2)),
+							(int)(Piranhas.get(i).getY() - (temp.getHeight(io) / 2))
+							, io);
 		}
 		// Invoke draw on FishFoods
 		for (i = 0; i < FishFoods.getSize(); i++) {
-			FishFoods.get(i).draw(background);
+			temp = FishFoods.get(i).draw();
+			g.drawImage(temp,
+					(int)(FishFoods.get(i).getX() - (temp.getWidth(io) / 2)),
+							(int)(FishFoods.get(i).getY() - (temp.getHeight(io) / 2))
+							, io);
 		}
 		// Invoke draw on Coins
 		for (i = 0; i < Coins.getSize(); i++) {
-			Coins.get(i).draw(background);
+			temp = Coins.get(i).draw();
+			g.drawImage(temp,
+					(int)(Coins.get(i).getX() - (temp.getWidth(io) / 2)),
+							(int)(Coins.get(i).getY() - (temp.getHeight(io) / 2))
+							, io);
 		}
-		destination.getContentPane().add(background);
 	}
 
 	public void keepOnAquarium(AqObject ao) {
+		if (ao.getX() < 0) ao.setX(0);
+		else if(ao.getX() > width) ao.setX(width);
 		
+		if (ao.getY() < 0) ao.setY(0);
+		else if(ao.getY() > height) ao.setY(height);
 	}
 	
 	public void timeHasPassed(double sec) {
-		
+		int i;
+		// Invoke timeHasPassed for Guppy
+		for (i = 0; i < Guppies.getSize(); i++) {
+			Guppies.get(i).timeHasPassed(sec);
+			keepOnAquarium(Guppies.get(i));
+		}
+		// Invoke timeHasPassed for Piranhas
+		for (i = 0; i < Piranhas.getSize(); i++) {
+			Piranhas.get(i).timeHasPassed(sec);
+			keepOnAquarium(Piranhas.get(i));
+		}
+		// Invoke timeHasPassed for FishFoods
+		for (i = 0; i < FishFoods.getSize(); i++) {
+			FishFoods.get(i).timeHasPassed(sec);
+			keepOnAquarium(FishFoods.get(i));
+		}
+		// Invoke timeHasPassed for Coins
+		for (i = 0; i < FishFoods.getSize(); i++) {
+			Coins.get(i).timeHasPassed(sec);
+			keepOnAquarium(Coins.get(i));
+		}
 	}
 }

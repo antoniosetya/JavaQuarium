@@ -1,17 +1,16 @@
 package lib;
-import javax.swing.JLabel;
+
+import java.awt.Image;
 
 public abstract class AqObject {
 	private final double speed;
 	private double x, y; // AqObject position
-	private int timeToRandomize;
 	private boolean isAlive;
 
 	public AqObject(final double absis, final double ordinat, final double s) {
 		this.x = absis;
 		this.y = ordinat;
 		this.speed = s;
-		this.timeToRandomize = 0;
 		this.isAlive = true;
 	}
 
@@ -28,10 +27,6 @@ public abstract class AqObject {
 		return y;
 	}
 
-	public int getTimeToRandomize() {
-		return timeToRandomize;
-	}
-
 	public boolean getIsAlive() {
 		return isAlive;
 	}
@@ -45,19 +40,11 @@ public abstract class AqObject {
 		this.y = ordinat;
 	}
 
-	public void setTimeToRandomize(final int randomTime) {
-		timeToRandomize = randomTime;
-	}
-
 	public void setIsAlive(final boolean alive) {
 		this.isAlive = alive;
 	}
 
 	public abstract void timeHasPassed(double absis);
 
-	public abstract void draw(JLabel destination);
-	
-	public void resetRandomTime() {
-		this.timeToRandomize = 1;
-	}
+	public abstract Image draw();
 }

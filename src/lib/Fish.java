@@ -1,12 +1,12 @@
 package lib;
 
 import java.util.Random;
-import javax.swing.JLabel;
+import java.awt.Image;
 
 /**
  * The type Fish.
  */
-public class Fish extends AqObject implements Moveable {
+public abstract class Fish extends AqObject implements Moveable {
 
 	/**
 	 * Constants for Initial Hungry Time.
@@ -66,14 +66,12 @@ public class Fish extends AqObject implements Moveable {
 	public Fish(final double x, final double y, final double z) {
 		super(x, y, z);
 		numEaten = 0;
-		timeToRandomize = 0;
 		fishFull = true;
 		setIsAlive(true);
 		facing = 'r';
 		setTimeBeforeHungry(INIT_HUNGRY_TIME);
 		setTimeBeforeDying(INIT_DYING_TIME);
-		toX = -1;
-		toY = -1;
+		moveRandomly();
 	}
 
 	/**
@@ -148,6 +146,10 @@ public class Fish extends AqObject implements Moveable {
 		return toY;
 	}
 
+	public double getTimeToRandomize() {
+		return timeToRandomize;
+	}
+	
 	/**
 	 * Sets num eaten.
 	 *
@@ -288,6 +290,10 @@ public class Fish extends AqObject implements Moveable {
 		}
 	}
 
+	public void resetRandomTime() {
+		this.timeToRandomize = 1;
+	}
+	
 	/**
 	 * @param timePassed
 	 *            refers to time already passed
@@ -296,16 +302,17 @@ public class Fish extends AqObject implements Moveable {
 		double curDegOfMovement;
 		if ((toX != -1) && !fishFull) {
 			curDegOfMovement = Math.atan2(toY - getY(), toX - getX());
-			if (Math.toRadians(curDegOfMovement) >= QUARTER_DEGREE
-					&& Math.toRadians(curDegOfMovement) <= THREE_QUART_DEGREE) {
+			System.out.println(curDegOfMovement);
+			if (Math.toDegrees(curDegOfMovement) >= QUARTER_DEGREE
+					&& Math.toDegrees(curDegOfMovement) <= THREE_QUART_DEGREE) {
 				setFacing('l');
 			} else {
 				setFacing('r');
 			}
 			this.timeToRandomize = 0;
 		} else {
-			timeToRandomize -= timePassed;
-			if (timeToRandomize <= 0) {
+			setTimeToRandomize(getTimeToRandomize() - timePassed);
+			if (getTimeToRandomize() <= 0) {
 				Random rand = new Random();
 				// Randomize direction
 				int newDirection = rand.nextInt(FULL_QUART_DEGREE);
@@ -321,8 +328,8 @@ public class Fish extends AqObject implements Moveable {
 			curDegOfMovement = Math.toRadians(degOfMovement);
 		}
 		// Set movement based on direction
-		setX(getX() + getSpeed() * Math.cos(curDegOfMovement) * timePassed);
-		setY(getY() + getSpeed() * Math.sin(curDegOfMovement) * timePassed);
+		setX(getX() + (getSpeed() * Math.cos(curDegOfMovement) * timePassed));
+		setY(getY() + (getSpeed() * Math.sin(curDegOfMovement) * timePassed));
 	}
 
 	/**
@@ -331,14 +338,12 @@ public class Fish extends AqObject implements Moveable {
 	 */
 	public void timeHasPassed(final double dtime) {
 		this.move(dtime);
-		if (fishFull) {
+		/*if (fishFull) {
 			this.countdownHungry(dtime);
 		} else {
 			this.countdownDying(dtime);
-		}
+		} */
 	}
 	
-	public void draw (JLabel destination) {
-		
-	}
+	public abstract Image draw ();
 }

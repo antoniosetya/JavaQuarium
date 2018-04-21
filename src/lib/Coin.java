@@ -1,18 +1,14 @@
 package lib;
 
-import java.awt.image.BufferedImage;
-import java.io.File;
-import java.io.IOException;
-import javax.imageio.ImageIO;
+import java.awt.Image;
 import javax.swing.ImageIcon;
-import javax.swing.JLabel;
 
 public class Coin extends AqObject {
     private int value;
     private static final int COIN_SPEED = 75;
     private static final int TWENTY = 20;
     private static final int FORTY = 40;
-    private JLabel coinSprite = new JLabel();
+    private Image coinSprite;
 
     public Coin() {
         super(0, 0, COIN_SPEED);
@@ -27,15 +23,7 @@ public class Coin extends AqObject {
     }
 
     private void loadSprite() {
-        try {
-            BufferedImage sprite = ImageIO.read(
-                    new File(System.getProperty("user.dir")
-                            + "/bin/assets/Coin.png"));
-            coinSprite.setIcon(new ImageIcon(sprite));
-        } catch (IOException ex) {
-            System.out.println("Cannot load sprite FishFood");
-            ex.printStackTrace();
-        }
+        coinSprite = (new ImageIcon("./bin/assets/Coin.png")).getImage();
     }
 
     //Getter & Setter
@@ -61,9 +49,7 @@ public class Coin extends AqObject {
         setIsAlive(false);
     }
 
-    public void draw(final JLabel destination) {
-        coinSprite.setBounds((int) Math.round(this.getX()) - TWENTY,
-                (int) Math.round(this.getY()) - TWENTY, FORTY, FORTY);
-        destination.add(coinSprite);
+    public Image draw() {
+        return coinSprite;
     }
 }
