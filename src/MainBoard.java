@@ -28,6 +28,7 @@ public class MainBoard extends JPanel implements ActionListener {
 	private final int height = 480;
 	private final double interval = 0.033;
 	
+	private MainBoard thisMainBoard = this;
 	private double alertTimeout = 0;
 	private String alertText;
 	private long numOfCoins = 1500;
@@ -43,6 +44,7 @@ public class MainBoard extends JPanel implements ActionListener {
 	private boolean winning;
 	private boolean losing;
 	private boolean gameRunning;
+	private Timer timer;
 	
 	public MainBoard() {
 		setBackground(Color.WHITE);
@@ -57,6 +59,43 @@ public class MainBoard extends JPanel implements ActionListener {
 		drawMainMenu();
 	}
 	
+	public long getNumOfCoins() {
+		return numOfCoins;
+	}
+
+	public int getNumEgg() {
+		return num_egg;
+	}
+
+	public Aquarium getOverworld() {
+		return overworld;
+	}
+
+	public void setNumOfCoins(long numOfCoins) {
+		this.numOfCoins = numOfCoins;
+	}
+
+	public void setNumEgg(int num_egg) {
+		this.num_egg = num_egg;
+	}
+
+	public void setOverworld(Aquarium overworld) {
+		this.overworld = overworld;
+	}
+	
+	public void runTimer() {
+		timer = new Timer((int)(interval * 1000),this);
+		timer.start();
+	}
+	
+	public void pauseTimer() {
+		timer.stop();
+	}
+	
+	public void restartTimer() {
+		timer.restart();
+	}
+
 	private void initGame() {
 		initMenubar();
 		overworld.initialize();
@@ -82,16 +121,13 @@ public class MainBoard extends JPanel implements ActionListener {
 							numOfCoins -= FishFoodPrice;
 						}
 						else {
-							alertTimeout = 2;
-							alertText = "Not enough coins!";
+							showAlert("Not enough coins!");
 						}
 					}
 				}
 			}
 		});
-		
-		Timer timer = new Timer((int)(interval * 1000),this);
-		timer.start();
+		runTimer();
 	}
 	
 	private void loadBackground() {
@@ -145,8 +181,7 @@ public class MainBoard extends JPanel implements ActionListener {
 						numOfCoins -= GuppyPrice;
 					}
 					else {
-						alertTimeout = 2;
-						alertText = "Not enough coins!";
+						showAlert("Not enough coins!");
 					}
 				}
 			}
@@ -168,8 +203,7 @@ public class MainBoard extends JPanel implements ActionListener {
 						numOfCoins -= PiranhaPrice;
 					}
 					else {
-						alertTimeout = 2;
-						alertText = "Not enough coins!";
+						showAlert("Not enough coins!");
 					}
 				}
 			}
@@ -193,14 +227,41 @@ public class MainBoard extends JPanel implements ActionListener {
 						menuButtons.get("EggButton").setText("<html>Buy Egg<br />" + egg_price + " Coins</html>");
 					}
 					else {
-						alertTimeout = 2;
-						alertText = "Not enough coins!";
+						showAlert("Not enough coins!");
 					}
 				}
 			}
 		});
 		
+		temp = new JButton();
+		temp.setEnabled(true);
+		temp.setText("<html>Save<br />Game</html>");
+		temp.setBorder(BorderFactory.createLineBorder(Color.BLUE,0,true));
+		temp.setBounds(420, 5, 75, 40);
+		menuButtons.put("SaveButton",temp);
+		add(menuButtons.get("SaveButton"));
+		menuButtons.get("SaveButton").addMouseListener(new MouseAdapter() {
+			@Override
+			public void mouseReleased(MouseEvent me) {
+				if (SwingUtilities.isLeftMouseButton(me)) {
+					pauseTimer();
+					FileHandler fh = new FileHandler("output.txt",thisMainBoard,'w');
+					if (fh.process()) {
+						showAlert("Saved to file output.txt!");
+					}
+					else {
+						showAlert("Failed to save file!");
+					}
+					restartTimer();
+				}
+			}
+		});
 		initLabels();
+	}
+	
+	private void showAlert(String alert) {
+		alertTimeout = 2;
+		alertText = alert;
 	}
 	
 	private void hideMenubar() {
