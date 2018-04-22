@@ -9,12 +9,12 @@ import java.lang.Math;
 public class Aquarium {
 	private int width;
 	private int height;
-	
+	private long numOfCoins = 150;
 	private List<Piranha> Piranhas = new List<Piranha>();
 	private List<Guppy> Guppies = new List<Guppy>();
 	private List<FishFood> FishFoods = new List<FishFood>();
 	private List<Coin> Coins = new List<Coin>();
-	/* private Siput Snail */
+	private Siput Snail;
 
 	// Constructors
 	public Aquarium() {
@@ -37,6 +37,10 @@ public class Aquarium {
 	}
 
 
+	public long getNumOfCoins() {
+		return numOfCoins;
+	}
+
 	public List<Piranha> getPiranhas() {
 		return Piranhas;
 	}
@@ -52,6 +56,10 @@ public class Aquarium {
 	public List<Coin> getCoins() {
 		return Coins;
 	}
+	
+	public Siput getSnail() {
+		return Snail;
+	}
 
 	public void setWidth(int width) {
 		this.width = width;
@@ -60,13 +68,15 @@ public class Aquarium {
 	public void setHeight(int height) {
 		this.height = height;
 	}
+	
+	public void setNumOfCoins(long numOfCoins) {
+		this.numOfCoins = numOfCoins;
+	}
 
 	public void initialize() {
 		Random rng = new Random();
 		Guppies.append(new Guppy(rng.nextInt(this.getWidth() + 1), rng.nextInt(this.getHeight() + 1)));
-		//Piranhas.append(new Piranha(rng.nextInt(this.getWidth() + 1), rng.nextInt(this.getHeight() + 1)));
-		//Coins.append(new Coin(rng.nextInt(this.getWidth() + 1), rng.nextInt(this.getHeight() + 1),100));
-		//Snail = new Snail(rng.nextFloat() % this.getWidth(), this.getHeight());
+		Snail = new Siput(rng.nextInt(this.getWidth() + 1), this.getHeight());
 	}
 
 	public void createNewObject(char obj) {
@@ -129,6 +139,12 @@ public class Aquarium {
 								, io);
 			}
 		}
+		// Invoke Snail's draw
+		temp = Snail.draw();
+		g.drawImage(temp, 
+				(int)(Snail.getX() - (temp.getWidth(io) / 2)),
+				(int)(Snail.getY() - (temp.getWidth(io) / 2) + offset),
+				io);
 	}
 	
 	private static double Euclidean(double x1, double y1, double x2, double y2) {
@@ -240,6 +256,25 @@ public class Aquarium {
 				break;
 			}
 		}
+		// Check whether there's Coin to go to
+		if (!Coins.isEmpty()) {
+			i = 0;
+			shortest = Euclidean(Snail.getX(), Snail.getY(),
+					Coins.get(i).getX(), Coins.get(i).getY());
+			optLoc = 0;
+			for (j = 1;j < FishFoods.getSize(); j++) {
+				temp = Euclidean(Snail.getX(), Snail.getY(),
+						Coins.get(i).getX(), Coins.get(i).getY());
+				if (shortest > temp) {
+					shortest = temp;
+					optLoc = j;
+				}
+			}
+			Snail.moveTowards(Coins.get(optLoc));
+		}
+		// Invoke timeHasPassed for Snail
+		Snail.timeHasPassed(sec);
+		keepOnAquarium(Snail);
 		
 		/* --- COLLISION DETECTION --- */
 		// For Guppy and FishFood
@@ -269,6 +304,18 @@ public class Aquarium {
 				}
 			}
 		}
+		
+		// For Snail and Coins
+		if (!Coins.isEmpty()) {
+			for (i = 0;i < Coins.getSize();i++) {
+				if (Coins.get(i).getIsAlive() && Snail.getHitBox().intersects(Coins.get(i).getHitBox())) {
+					numOfCoins += Coins.get(i).getValue();
+					Coins.get(i).collected();
+					break;
+				}
+			}
+		}
+		
 		/* --- "GARBAGE CLEANER" -- */
 		cleanList(Guppies);
 		cleanList(Piranhas);
@@ -276,20 +323,19 @@ public class Aquarium {
 		cleanList(Coins);
 	}
 	
-	public int CollectCoin(int x, int y) {
-		int value = -1;
-		boolean stop = false;
+	public boolean CollectCoin(int x, int y) {
+		boolean found = false;
 		int i = 0;
-		while ((i < Coins.getSize()) && !stop) {
+		while ((i < Coins.getSize()) && !found) {
 			if (Coins.get(i).getHitBox().contains(x,y)) {
-				value = Coins.get(i).getValue();
+				numOfCoins += Coins.get(i).getValue();
 				Coins.get(i).collected();
-				stop = true;
+				found = true;
 			}
 			else {
 				i++;
 			}
 		}
-		return value;
+		return found;
 	}
 }

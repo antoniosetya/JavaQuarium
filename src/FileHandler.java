@@ -58,7 +58,7 @@ public class FileHandler {
 			try {
 				fname.createNewFile();
 				fwrite = new FileWriter(fname);
-				fwrite.write(target.getNumOfCoins() + " " + target.getNumEgg() + "\n");
+				fwrite.write(target.getOverworld().getNumOfCoins() + " " + target.getNumEgg() + "\n");
 				// Writes Guppy data to file
 				fwrite.write("<Guppy>\n");
 				size = target.getOverworld().getGuppies().getSize();
@@ -76,6 +76,11 @@ public class FileHandler {
 					fwrite.write(Ptemp.get(i).getX() + " " + Ptemp.get(i).getY() + "\n");
 				}
 				fwrite.write("</Piranha>\n");
+				// Write Snail data to file
+				Siput Stemp = target.getOverworld().getSnail();
+				fwrite.write("<Snail>\n");
+				fwrite.write(Stemp.getX() + " " + Stemp.getY() + "\n");
+				fwrite.write("</Snail>\n");
 				fwrite.close();
 				status = true;
 			}

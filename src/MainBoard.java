@@ -31,7 +31,6 @@ public class MainBoard extends JPanel implements ActionListener {
 	private MainBoard thisMainBoard = this;
 	private double alertTimeout = 0;
 	private String alertText;
-	private long numOfCoins = 1500;
 	private int egg_price = 100;
 	private int num_egg = 0;
 	private JTextArea coinText;
@@ -59,20 +58,12 @@ public class MainBoard extends JPanel implements ActionListener {
 		drawMainMenu();
 	}
 	
-	public long getNumOfCoins() {
-		return numOfCoins;
-	}
-
 	public int getNumEgg() {
 		return num_egg;
 	}
 
 	public Aquarium getOverworld() {
 		return overworld;
-	}
-
-	public void setNumOfCoins(long numOfCoins) {
-		this.numOfCoins = numOfCoins;
 	}
 
 	public void setNumEgg(int num_egg) {
@@ -109,16 +100,12 @@ public class MainBoard extends JPanel implements ActionListener {
 			public void mousePressed(MouseEvent me) {
 				if (SwingUtilities.isLeftMouseButton(me) && isMouseInPlayArea(me)) {
 					// Determines if click is above a coin or not.
-					int coin_value = overworld.CollectCoin(me.getX(), me.getY() - MenubarOffset);
-					if (coin_value >= 0) {
-						// Click is above coin -> update numOfCoins
-						numOfCoins += coin_value;
-					}
-					else {
+					boolean success = overworld.CollectCoin(me.getX(), me.getY() - MenubarOffset);
+					if (!success) {
 						// Click is not above a coin -> drop FishFood if possible
-						if (numOfCoins >= FishFoodPrice) {
+						if (overworld.getNumOfCoins() >= FishFoodPrice) {
 							overworld.createNewObject('F',me.getX(),me.getY() - MenubarOffset);
-							numOfCoins -= FishFoodPrice;
+							overworld.setNumOfCoins(overworld.getNumOfCoins() - FishFoodPrice);
 						}
 						else {
 							showAlert("Not enough coins!");
@@ -139,13 +126,15 @@ public class MainBoard extends JPanel implements ActionListener {
 	}
 	
 	private boolean checkLosing() {
-		return (overworld.getGuppies().isEmpty() && overworld.getPiranhas().isEmpty() && (numOfCoins < GuppyPrice)); 
+		return (overworld.getGuppies().isEmpty() && 
+				overworld.getPiranhas().isEmpty() && 
+				(overworld.getNumOfCoins() < GuppyPrice)); 
 	}
 	
 	private void initLabels() {
 		coinText = new JTextArea();
 		coinText.setEditable(false);
-		coinText.setText("Coins : \n" + numOfCoins);
+		coinText.setText("Coins : \n" + overworld.getNumOfCoins());
 		coinText.setBounds(555, 5, 80, 40);
 		add(coinText);
 		
@@ -157,7 +146,7 @@ public class MainBoard extends JPanel implements ActionListener {
 	}
 	
 	private void updateCoinLabel() {
-		coinText.setText("Coins : \n" + numOfCoins);
+		coinText.setText("Coins : \n" + overworld.getNumOfCoins());
 	}
 	
 	private void updateEggLabel() {
@@ -176,9 +165,9 @@ public class MainBoard extends JPanel implements ActionListener {
 			@Override
 			public void mouseReleased(MouseEvent me) {
 				if (SwingUtilities.isLeftMouseButton(me)) {
-					if (numOfCoins >= GuppyPrice) {
+					if (overworld.getNumOfCoins() >= GuppyPrice) {
 						overworld.createNewObject('G');
-						numOfCoins -= GuppyPrice;
+						overworld.setNumOfCoins(overworld.getNumOfCoins() - GuppyPrice);
 					}
 					else {
 						showAlert("Not enough coins!");
@@ -198,9 +187,9 @@ public class MainBoard extends JPanel implements ActionListener {
 			@Override
 			public void mouseReleased(MouseEvent me) {
 				if (SwingUtilities.isLeftMouseButton(me)) {
-					if (numOfCoins >= PiranhaPrice) {
+					if (overworld.getNumOfCoins() >= PiranhaPrice) {
 						overworld.createNewObject('P');
-						numOfCoins -= PiranhaPrice;
+						overworld.setNumOfCoins(overworld.getNumOfCoins() - PiranhaPrice);
 					}
 					else {
 						showAlert("Not enough coins!");
@@ -220,9 +209,9 @@ public class MainBoard extends JPanel implements ActionListener {
 			@Override
 			public void mouseReleased(MouseEvent me) {
 				if (SwingUtilities.isLeftMouseButton(me)) {
-					if (numOfCoins >= egg_price) {
+					if (overworld.getNumOfCoins() >= egg_price) {
 						num_egg++;
-						numOfCoins -= egg_price;
+						overworld.setNumOfCoins(overworld.getNumOfCoins() - egg_price);
 						egg_price += 100;
 						menuButtons.get("EggButton").setText("<html>Buy Egg<br />" + egg_price + " Coins</html>");
 					}
