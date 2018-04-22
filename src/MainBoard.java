@@ -11,9 +11,11 @@ import java.awt.event.MouseAdapter;
 import javax.swing.JPanel;
 import javax.swing.JTextArea;
 import javax.swing.JLabel;
+import javax.swing.JOptionPane;
 import javax.swing.ImageIcon;
 import javax.swing.Timer;
 import javax.swing.JButton;
+import javax.swing.JFileChooser;
 import javax.swing.BorderFactory;
 import javax.swing.SwingUtilities;
 import lib.Aquarium;
@@ -87,9 +89,10 @@ public class MainBoard extends JPanel implements ActionListener {
 		timer.restart();
 	}
 
-	private void initGame() {
+	private void initGame(boolean newGame) {
 		initMenubar();
-		overworld.initialize();
+		
+		if (newGame) overworld.initialize();
 		
 		gameRunning = true;
 		
@@ -234,12 +237,15 @@ public class MainBoard extends JPanel implements ActionListener {
 			public void mouseReleased(MouseEvent me) {
 				if (SwingUtilities.isLeftMouseButton(me)) {
 					pauseTimer();
-					FileHandler fh = new FileHandler("output.txt",thisMainBoard,'w');
-					if (fh.process()) {
-						showAlert("Saved to file output.txt!");
-					}
-					else {
-						showAlert("Failed to save file!");
+					JFileChooser jfc = new JFileChooser();
+					if (jfc.showSaveDialog(thisMainBoard) == JFileChooser.APPROVE_OPTION) {
+						FileHandler fh = new FileHandler(jfc.getSelectedFile().getAbsolutePath(),thisMainBoard,'w');
+						if (fh.process()) {
+							showAlert("Saved to file " + jfc.getSelectedFile().getName() + "!");
+						}
+						else {
+							showAlert("Failed to save file!");
+						}
 					}
 					restartTimer();
 				}
@@ -280,7 +286,35 @@ public class MainBoard extends JPanel implements ActionListener {
 			public void mousePressed(MouseEvent me) {
 				if (SwingUtilities.isLeftMouseButton(me)) {
 					hideMainMenu();
-					initGame();
+					initGame(true);
+				}
+			}
+		});
+		
+		temp = new JButton("<html><h2 align=\"center\" style=\"color : white; font-family : 'Univers';\">Load<br/>Game</h2></html>");
+		temp.setEnabled(true);
+		temp.setBackground(Color.BLUE);
+		temp.setBorder(BorderFactory.createLineBorder(Color.BLUE,0,true));
+		temp.setBounds(260,270 + MenubarOffset,100,50);
+		menuButtons.put("LoadButton", temp);
+		add(menuButtons.get("LoadButton"));
+		menuButtons.get("LoadButton").addMouseListener(new MouseAdapter() {
+			@Override
+			public void mousePressed(MouseEvent me) {
+				if (SwingUtilities.isLeftMouseButton(me)) {
+					JFileChooser jfc = new JFileChooser();
+					if (jfc.showOpenDialog(thisMainBoard) == JFileChooser.APPROVE_OPTION) {
+						FileHandler fh = new FileHandler(jfc.getSelectedFile().getAbsolutePath(),thisMainBoard,'r');
+						if (fh.process()) {
+							hideMainMenu();
+							initGame(false);
+						}
+						else {
+							JOptionPane.showMessageDialog(thisMainBoard, 
+									fh.getStatDetail(), 
+									"Error", JOptionPane.ERROR_MESSAGE);
+						}
+					}
 				}
 			}
 		});
@@ -289,6 +323,8 @@ public class MainBoard extends JPanel implements ActionListener {
 	private void hideMainMenu() {
 		menuButtons.get("StartButton").setEnabled(false);
 		menuButtons.get("StartButton").setVisible(false);
+		menuButtons.get("LoadButton").setEnabled(false);
+		menuButtons.get("LoadButton").setVisible(false);
 		multipurpose.setVisible(false);
 	}
 	

@@ -43,15 +43,6 @@ public class Guppy extends Fish {
         draw();
     }
     
-    public Guppy(final double x, final double y, final int stage) {
-        super(x, y, GUPPY_SPEED, THIRTY_SIX, THIRTY_TWO);
-        setGrowthStage(stage);
-        setCoinTimeLeft(INITIAL_COIN_TIME);
-        numGuppy++;
-        // Flush initial Image to gupSprite
-        draw();
-    }
-
     //Getter & Setter
     public int getGrowthStage() {
         return this.growthStage;

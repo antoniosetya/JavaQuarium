@@ -72,6 +72,10 @@ public class Aquarium {
 	public void setNumOfCoins(long numOfCoins) {
 		this.numOfCoins = numOfCoins;
 	}
+	
+	public void setSnail(Siput s) {
+		Snail = s;
+	}
 
 	public void initialize() {
 		Random rng = new Random();
