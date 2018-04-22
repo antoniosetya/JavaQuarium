@@ -23,23 +23,23 @@ public class Guppy extends Fish {
     private static int numGuppy = 0;
     private int growthStage;
     private double coinDropTime;
-    private Image GupSprite;
+    private Image gupSprite;
 
     public Guppy() {
-        super(0, 0, GUPPY_SPEED,THIRTY_SIX,THIRTY_TWO);
+        super(0, 0, GUPPY_SPEED, THIRTY_SIX, THIRTY_TWO);
         setGrowthStage(INITIAL_GROWTH_STAGE);
         setCoinTimeLeft(INITIAL_COIN_TIME);
         numGuppy++;
-        // Flush initial Image to GupSprite
+        // Flush initial Image to gupSprite
         draw();
     }
 
     public Guppy(final double x, final double y) {
-        super(x, y, GUPPY_SPEED, THIRTY_SIX,THIRTY_TWO);
+        super(x, y, GUPPY_SPEED, THIRTY_SIX, THIRTY_TWO);
         setGrowthStage(INITIAL_GROWTH_STAGE);
         setCoinTimeLeft(INITIAL_COIN_TIME);
         numGuppy++;
-        // Flush initial Image to GupSprite
+        // Flush initial Image to gupSprite
         draw();
     }
 
@@ -91,7 +91,7 @@ public class Guppy extends Fish {
 	        default:
 	            width = THIRTY_SIX;
 	            height = THIRTY_TWO;
-        } 
+        }
     }
 
     // Coin
@@ -126,7 +126,7 @@ public class Guppy extends Fish {
         }
         filename = this.getGrowthStage() + "_Guppy_" + state
                 + "_" + this.getFacing() + ".png";
-        GupSprite = (new ImageIcon("./bin/assets/" + filename)).getImage();
-        return GupSprite;
+        gupSprite = (new ImageIcon("./bin/assets/" + filename)).getImage();
+        return gupSprite;
     }
 }
