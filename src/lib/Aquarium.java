@@ -264,7 +264,6 @@ public class Aquarium {
 					if (Guppies.get(j).getIsAlive() && Piranhas.get(i).getHitBox().intersects(Guppies.get(j).getHitBox())) {
 						droppedCoin = Piranhas.get(i).eatGuppy(Guppies.get(j));
 						Coins.append(droppedCoin);
-						Guppies.get(i).eaten();
 						break;
 					}
 				}

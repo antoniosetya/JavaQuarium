@@ -282,7 +282,6 @@ public abstract class Fish extends AqObject implements Moveable {
 		if ((toObj != null) && !fishFull) {
 			if (toObj.getIsAlive()) {
 				curDegOfMovement = Math.atan2(toObj.getY() - getY(), toObj.getX() - getX());
-				System.out.println(Math.abs(Math.toDegrees(curDegOfMovement)));
 				if (Math.abs(Math.toDegrees(curDegOfMovement)) >= QUARTER_DEGREE
 						&& Math.abs(Math.toDegrees(curDegOfMovement)) <= THREE_QUART_DEGREE) {
 					setFacing('l');
