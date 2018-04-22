@@ -29,10 +29,10 @@ public class Coin extends AqObject {
 
     private void loadSprite() {
     	if (value >= 100) {
-    		coinSprite = (new ImageIcon("./bin/assets/Diamond.png")).getImage();
+    		coinSprite = (new ImageIcon("./assets/Diamond.png")).getImage();
     	}
     	else {
-    		coinSprite = (new ImageIcon("./bin/assets/Coin.png")).getImage();
+    		coinSprite = (new ImageIcon("./assets/Coin.png")).getImage();
     	}
     }
 

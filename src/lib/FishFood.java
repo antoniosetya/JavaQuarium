@@ -22,7 +22,8 @@ public class FishFood extends AqObject implements Moveable {
 	}
 
 	private void loadSprite() {
-		FFSprite = (new ImageIcon("./bin/assets/FishFood.png")).getImage();
+		ImageIcon temp = new ImageIcon("./assets/FishFood.png");
+		FFSprite = temp.getImage();
 	}
 	
 	public boolean isEqual(final FishFood anotherFishFood) {

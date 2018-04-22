@@ -30,7 +30,7 @@ public class MainBoard extends JPanel implements ActionListener {
 	
 	private double alertTimeout = 0;
 	private String alertText;
-	private long numOfCoins = 10;
+	private long numOfCoins = 1500;
 	private int egg_price = 100;
 	private int num_egg = 0;
 	private JTextArea coinText;
@@ -95,7 +95,7 @@ public class MainBoard extends JPanel implements ActionListener {
 	}
 	
 	private void loadBackground() {
-		background = (new ImageIcon("./bin/assets/background.jpg")).getImage();
+		background = (new ImageIcon("./assets/background.jpg")).getImage();
 	}
 	
 	private boolean checkWinning() {

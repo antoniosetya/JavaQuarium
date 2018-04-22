@@ -39,7 +39,7 @@ public class Piranha extends Fish {
             state = "h";
         }
         filename = "Piranha_" + state + "_" + this.getFacing() + ".png";
-        pirSprite = (new ImageIcon("./bin/assets/" + filename)).getImage();
+        pirSprite = (new ImageIcon("./assets/" + filename)).getImage();
         return pirSprite;
     }
 }

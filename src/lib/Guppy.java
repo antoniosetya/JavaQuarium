@@ -126,7 +126,7 @@ public class Guppy extends Fish {
         }
         filename = this.getGrowthStage() + "_Guppy_" + state
                 + "_" + this.getFacing() + ".png";
-        GupSprite = (new ImageIcon("./bin/assets/" + filename)).getImage();
+        GupSprite = (new ImageIcon("./assets/" + filename)).getImage();
         return GupSprite;
     }
 }
