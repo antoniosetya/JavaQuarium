@@ -331,7 +331,7 @@ public class Aquarium {
 		boolean found = false;
 		int i = 0;
 		while ((i < Coins.getSize()) && !found) {
-			if (Coins.get(i).getHitBox().contains(x,y)) {
+			if (Coins.get(i).getHitBox().contains(x,y) && Coins.get(i).getIsAlive()) {
 				numOfCoins += Coins.get(i).getValue();
 				Coins.get(i).collected();
 				found = true;
