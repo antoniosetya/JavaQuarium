@@ -7,12 +7,33 @@ import javax.swing.ImageIcon;
  * The type Coin.
  */
 public class Coin extends AqObject {
+    /**
+     * Variable for coin's value.
+     */
     private int value;
+    /**
+     * Constant for coin's speed.
+     */
     private static final int COIN_SPEED = 75;
+    /**
+     * Constant for thirty.
+     */
     private static final int THIRTY = 30;
+    /**
+     * Constant for thirty two.
+     */
     private static final int THIRTY_TWO = 32;
+    /**
+     * Constant for twenty siz.
+     */
     private static final int TWENTY_SIX = 26;
+    /**
+     * Constant for one hundred.
+     */
     private static final int ONE_HUNDRED = 100;
+    /**
+     * Variable for coin sprite.
+     */
     private Image coinSprite;
 
     /**
@@ -41,6 +62,9 @@ public class Coin extends AqObject {
         loadSprite();
     }
 
+    /**
+     * Load the sprite.
+     */
     private void loadSprite() {
         if (value >= ONE_HUNDRED) {
             coinSprite = (new ImageIcon("./assets/Diamond.png")).getImage();
@@ -54,7 +78,7 @@ public class Coin extends AqObject {
      *
      * @return the value
      */
-//Getter & Setter
+
     public int getValue() {
         return this.value;
     }
@@ -69,28 +93,37 @@ public class Coin extends AqObject {
     }
 
     /**
-     * Move.
+     * Coin Movement.
      *
      * @param timePassed the time passed
      */
-// Coin movement
+
     public void move(final double timePassed) {
         setY(getY() + (COIN_SPEED * timePassed));
         updateHitBox();
     }
 
+    /**
+     * Implementation of time has passed.
+     *
+     * @param dtime sec of time has passed
+     */
     public void timeHasPassed(final double dtime) {
         move(dtime);
     }
 
     /**
-     * Collected.
+     * Coin Collected.
      */
-// Call this if coin is collected
     public void collected() {
         setIsAlive(false);
     }
 
+    /**
+     * Draw the image.
+     *
+     * @return image drawn
+     */
     public Image draw() {
         return coinSprite;
     }

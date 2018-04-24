@@ -6,8 +6,19 @@ package arkavquarium.lib;
  * @param <T> the type parameter
  */
 public class List<T> {
+    /**
+     * Subclass refering to element list.
+     *
+     * @param <T> the type parameter
+     */
     private class ElmList<T> {
+        /**
+         * Generic variable for data.
+         */
         private T data;
+        /**
+         * The next element in list.
+         */
         private ElmList next;
 
         /**
@@ -57,8 +68,17 @@ public class List<T> {
         }
     }
 
+    /**
+     * First element in list.
+     */
     private ElmList<T> first;
+    /**
+     * Last element in list.
+     */
     private ElmList<T> last;
+    /**
+     * Size of list.
+     */
     private int size;
 
     /**
@@ -178,9 +198,9 @@ public class List<T> {
     }
 
     /**
-     * Remove at.
+     * Remove at certain index.
      *
-     * @param i the
+     * @param i the index
      */
     public void removeAt(final int i) {
         ElmList<T> d = first;
@@ -205,10 +225,10 @@ public class List<T> {
     }
 
     /**
-     * Get t.
+     * Get info.
      *
-     * @param i the
-     * @return the t
+     * @param i the index
+     * @return the info
      */
     public T get(final int i) {
         ElmList<T> d = first;

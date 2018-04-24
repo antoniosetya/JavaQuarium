@@ -56,9 +56,9 @@ public abstract class Fish extends AqObject implements Moveable {
     /**
      * Instantiates a new Fish.
      *
-     * @param x      the x
-     * @param y      the y
-     * @param z      the z
+     * @param x      the absis
+     * @param y      the ordinat
+     * @param z      the speed
      * @param width  the width
      * @param height the height
      */
@@ -237,7 +237,7 @@ public abstract class Fish extends AqObject implements Moveable {
     /**
      * Countdown hungry.
      *
-     * @param dtime the dtime
+     * @param dtime the delta time
      */
     public void countdownHungry(final double dtime) {
         if (timeBeforeHungry <= 0) {
@@ -250,7 +250,7 @@ public abstract class Fish extends AqObject implements Moveable {
     /**
      * Countdown dying.
      *
-     * @param dtime the dtime
+     * @param dtime the delta time
      */
     public void countdownDying(final double dtime) {
         if (timeBeforeDying <= 0) {

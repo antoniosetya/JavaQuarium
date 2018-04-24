@@ -9,22 +9,54 @@ import javax.swing.JPanel;
  * The type Aquarium.
  */
 public class Aquarium {
+    /**
+     * Variable for width.
+     */
     private int width;
+    /**
+     * Variable for height.
+     */
     private int height;
+    /**
+     * Constant for initial coin.
+     */
     private static final long INITIAL_COIN = 150;
+    /**
+     * Constant for initial width.
+     */
     private static final int INITIAL_WIDTH = 640;
+    /**
+     * Constant for initial height.
+     */
     private static final int INITIAL_HEIGHT = 480;
+    /**
+     * Variable for number of coin.
+     */
     private long numOfCoins = INITIAL_COIN;
+    /**
+     * Variable for list of piranha.
+     */
     private List<Piranha> piranhas = new List<Piranha>();
+    /**
+     * Variable for list of guppy.
+     */
     private List<Guppy> guppies = new List<Guppy>();
+    /**
+     * Variable for list of fish food.
+     */
     private List<FishFood> fishFoods = new List<FishFood>();
+    /**
+     * Variable for list of coin.
+     */
     private List<Coin> coins = new List<Coin>();
+    /**
+     * Variable for snail.
+     */
     private Siput snail;
 
     /**
      * Instantiates a new Aquarium.
      */
-// Constructors
     public Aquarium() {
         width = INITIAL_WIDTH;
         height = INITIAL_HEIGHT;
@@ -62,7 +94,7 @@ public class Aquarium {
 
 
     /**
-     * Gets num of coins.
+     * Gets number of coins.
      *
      * @return the num of coins
      */
@@ -259,6 +291,16 @@ public class Aquarium {
                 io);
     }
 
+    /**
+     * Keep on aquarium.
+     *
+     * @param x1 the first absis
+     * @param y1 the first ordinat
+     * @param x2 the second absis
+     * @param y2 the second ordinat
+     *
+     * @return euclidean distance between that coordinate
+     */
     private static double euclidean(final double x1, final double y1,
                                     final double x2, final double y2) {
         return (Math.sqrt(Math.pow(x2 - x1, 2) + Math.pow(y2 - y1, 2)));
@@ -282,6 +324,11 @@ public class Aquarium {
         }
     }
 
+    /**
+     * Clean the list.
+     *
+     * @param lao list of AqObject that want to be cleaned
+     */
     private void cleanList(final List<? extends AqObject> lao) {
         int i = 0;
         while ((i < lao.getSize()) && (lao.get(i) != null)) {
@@ -452,8 +499,8 @@ public class Aquarium {
     /**
      * Collect a coin.
      *
-     * @param x the x position
-     * @param y the y position
+     * @param x the absis
+     * @param y the ordinat
      * @return the boolean whether a coin is collected or not
      */
     public boolean collectCoin(final int x, final int y) {

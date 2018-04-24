@@ -7,12 +7,33 @@ import java.awt.Image;
  * The type Piranha.
  */
 public class Piranha extends Fish {
+    /**
+     * Constant piranha's speed.
+     */
     private static final int PIRANHA_SPEED = 40;
+    /**
+     * Constant guppy's price.
+     */
     private static final int GUPPY_PRICE = 100;
+    /**
+     * Constant for fifteen.
+     */
     private static final int FIFTEEN = 15;
+    /**
+     * Constant for twenty.
+     */
     private static final int TWENTY = 20;
+    /**
+     * Constant for width.
+     */
     private static final int WIDTH = 76;
+    /**
+     * Constant for height.
+     */
     private static final int HEIGHT = 64;
+    /**
+     * Constant for seventy one.
+     */
     private Image pirSprite;
 
     /**
@@ -48,6 +69,11 @@ public class Piranha extends Fish {
         return c1;
     }
 
+    /**
+     * Draw the image.
+     *
+     * @return image drawn
+     */
     @Override
     public Image draw() {
         String state, filename;

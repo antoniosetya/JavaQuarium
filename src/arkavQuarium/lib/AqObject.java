@@ -4,24 +4,42 @@ import java.awt.Image;
 import java.awt.Rectangle;
 
 /**
- * The type Aq object.
+ * The type Object for Aquarium.
  */
 public abstract class AqObject {
+    /**
+     * Constants for Hit Box Offset.
+     */
     private static final int HITBOXOFFSET = 4;
+    /**
+     * Variable for speed.
+     */
     private final double speed;
-    private double x, y; // AqObject position
+    /**
+     * Variable for coordinate x and y.
+     */
+    private double x, y;
+    /**
+     * Variable for width and height.
+     */
     private int width, height;
+    /**
+     * Variable refering to object is alive or not.
+     */
     private boolean isAlive;
+    /**
+     * Variable for Hit Box.
+     */
     private Rectangle hitbox;
 
     /**
-     * Instantiates a new Aq object.
+     * Instantiates a new Aquarium object.
      *
-     * @param absis   the absis
-     * @param ordinat the ordinat
-     * @param s       the s
-     * @param i       the
-     * @param i1      the 1
+     * @param absis   the absis of object
+     * @param ordinat the ordinat of object
+     * @param s       the speed of object
+     * @param i       the width of object
+     * @param i1      the height of object
      */
     public AqObject(final double absis, final double ordinat,
                     final double s,
@@ -49,7 +67,7 @@ public abstract class AqObject {
     }
 
     /**
-     * Gets x.
+     * Gets absis.
      *
      * @return the x
      */
@@ -58,7 +76,7 @@ public abstract class AqObject {
     }
 
     /**
-     * Gets y.
+     * Gets ordinat.
      *
      * @return the y
      */
@@ -94,7 +112,7 @@ public abstract class AqObject {
     }
 
     /**
-     * Sets x.
+     * Sets absis.
      *
      * @param absis the absis
      */
@@ -104,7 +122,7 @@ public abstract class AqObject {
     }
 
     /**
-     * Sets y.
+     * Sets ordinat.
      *
      * @param ordinat the ordinat
      */
@@ -140,7 +158,7 @@ public abstract class AqObject {
     }
 
     /**
-     * Time has passed.
+     * Function to do things when certain time has passed.
      *
      * @param absis the absis
      */

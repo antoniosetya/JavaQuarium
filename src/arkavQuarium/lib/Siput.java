@@ -8,12 +8,33 @@ import java.util.Random;
  * The type Siput.
  */
 public class Siput extends AqObject implements Moveable {
+    /**
+     * Constants for binary direction.
+     */
     private static final int BINARY_DIRECTION = 2;
+    /**
+     * Constants for left direction.
+     */
     private static final int LEFT_DIRECTION = 1;
+    /**
+     * Constants for snail speed.
+     */
     private static final int SNAIL_SPEED = 40;
+    /**
+     * Constants for width.
+     */
     private static final int WIDTH = 76;
+    /**
+     * Constants for height.
+     */
     private static final int HEIGHT = 50;
+    /**
+     * Constants for fifteen.
+     */
     private static final int FIFTEEN = 15;
+    /**
+     * Constants for twenty.
+     */
     private static final int TWENTY = 20;
     /**
      * Constants for 270 degrees.
@@ -27,11 +48,25 @@ public class Siput extends AqObject implements Moveable {
      * Constants for 90 degrees.
      */
     private static final int QUARTER_DEGREE = 90;
-
+    /**
+     * Constants for 270 degrees.
+     */
     private char facing;
+    /**
+     * Variable for face of snail.
+     */
     private int degOfMovement;
+    /**
+     * Variable time to randomize.
+     */
     private double timeToRandomize;
+    /**
+     * Variable to object.
+     */
     private AqObject toObj;
+    /**
+     * Variable for snail sprite.
+     */
     private Image sipSprite;
 
     /**
@@ -141,6 +176,11 @@ public class Siput extends AqObject implements Moveable {
         this.toObj = null;
     }
 
+    /**
+     * Move when certain time has passed.
+     *
+     * @param timePassed refers to sec time has passed
+     */
     public void move(final double timePassed) {
         double curDegOfMovement;
         if (toObj != null) { // Snail shall move towards toObj
@@ -183,10 +223,20 @@ public class Siput extends AqObject implements Moveable {
         updateHitBox();
     }
 
+    /**
+     * Implementation of time has passed.
+     *
+     * @param dTime sec of time has passed
+     */
     public void timeHasPassed(final double dTime) {
         this.move(dTime);
     }
 
+    /**
+     * Draw the image.
+     *
+     * @return image drawn
+     */
     public Image draw() {
         String filename = "Snail_" + getFacing() + ".png";
         sipSprite = (new ImageIcon("./assets/" + filename)).getImage();
