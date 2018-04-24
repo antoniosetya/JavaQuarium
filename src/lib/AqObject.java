@@ -3,85 +3,172 @@ package lib;
 import java.awt.Image;
 import java.awt.Rectangle;
 
+/**
+ * The type Aq object.
+ */
 public abstract class AqObject {
-	private static final int HITBOXOFFSET = 4;
-	protected final double speed;
-	protected double x, y; // AqObject position
-	protected int width, height;
-	protected boolean isAlive;
-	protected Rectangle hitbox;
+    private static final int HITBOXOFFSET = 4;
+    private final double speed;
+    private double x, y; // AqObject position
+    private int width, height;
+    private boolean isAlive;
+    private Rectangle hitbox;
 
-	public AqObject(final double absis, final double ordinat, final double s, final int width, final int height) {
-		this.x = absis;
-		this.y = ordinat;
-		this.speed = s;
-		this.isAlive = true;
-		this.width = width;
-		this.height = height;
-		hitbox = new Rectangle((int)(x - ((width - HITBOXOFFSET) / 2)),
-				(int)(y - ((height - HITBOXOFFSET)/2)),
-				width - HITBOXOFFSET,
-				height - HITBOXOFFSET);
-	}
+    /**
+     * Instantiates a new Aq object.
+     *
+     * @param absis   the absis
+     * @param ordinat the ordinat
+     * @param s       the s
+     * @param i       the
+     * @param i1      the 1
+     */
+    public AqObject(final double absis, final double ordinat,
+                    final double s,
+                    final int i, final int i1) {
+        this.x = absis;
+        this.y = ordinat;
+        this.speed = s;
+        this.isAlive = true;
+        this.width = i;
+        this.height = i1;
+        hitbox = new Rectangle((int) (x - ((i - HITBOXOFFSET) / 2)),
+                (int) (y - ((i1 - HITBOXOFFSET) / 2)),
+                i - HITBOXOFFSET,
+                i1 - HITBOXOFFSET);
+    }
 
-	// Getter
-	public double getSpeed() {
-		return speed;
-	}
+    /**
+     * Gets speed.
+     *
+     * @return the speed
+     */
+// Getter
+    public double getSpeed() {
+        return speed;
+    }
 
-	public double getX() {
-		return x;
-	}
+    /**
+     * Gets x.
+     *
+     * @return the x
+     */
+    public double getX() {
+        return x;
+    }
 
-	public double getY() {
-		return y;
-	}
+    /**
+     * Gets y.
+     *
+     * @return the y
+     */
+    public double getY() {
+        return y;
+    }
 
-	public boolean getIsAlive() {
-		return isAlive;
-	}
-	
-	public int getWidth() {
-		return width;
-	}
+    /**
+     * Gets is alive.
+     *
+     * @return the is alive
+     */
+    public boolean getIsAlive() {
+        return isAlive;
+    }
 
-	public int getHeight() {
-		return height;
-	}
-	
-	// Setter
-	public void setX(final double absis) {
-		this.x = absis;
-	}
+    /**
+     * Gets width.
+     *
+     * @return the width
+     */
+    public int getWidth() {
+        return width;
+    }
 
-	public void setY(final double ordinat) {
-		this.y = ordinat;
-	}
+    /**
+     * Gets height.
+     *
+     * @return the height
+     */
+    public int getHeight() {
+        return height;
+    }
 
-	public void setIsAlive(final boolean alive) {
-		this.isAlive = alive;
-	}
-	
-	public void setWidth(int width) {
-		this.width = width;
-	}
-	
-	public void setHeight(int height) {
-		this.height = height;
-	}
+    /**
+     * Sets x.
+     *
+     * @param absis the absis
+     */
+// Setter
+    public void setX(final double absis) {
+        this.x = absis;
+    }
 
-	public abstract void timeHasPassed(double absis);
+    /**
+     * Sets y.
+     *
+     * @param ordinat the ordinat
+     */
+    public void setY(final double ordinat) {
+        this.y = ordinat;
+    }
 
-	public abstract Image draw();
-	
-	public void updateHitBox() {
-		hitbox.setBounds((int)(x - ((width - HITBOXOFFSET) / 2)),
-				(int)(y - ((height - HITBOXOFFSET)/2)),
-				width - HITBOXOFFSET,
-				height - HITBOXOFFSET);
-	}
-	
+    /**
+     * Sets is alive.
+     *
+     * @param alive the alive
+     */
+    public void setIsAlive(final boolean alive) {
+        this.isAlive = alive;
+    }
+
+    /**
+     * Sets width.
+     *
+     * @param w the w
+     */
+    public void setWidth(final int w) {
+        this.width = w;
+    }
+
+    /**
+     * Sets height.
+     *
+     * @param h the h
+     */
+    public void setHeight(final int h) {
+        this.height = h;
+    }
+
+    /**
+     * Time has passed.
+     *
+     * @param absis the absis
+     */
+    public abstract void timeHasPassed(double absis);
+
+    /**
+     * Draw image.
+     *
+     * @return the image
+     */
+    public abstract Image draw();
+
+    /**
+     * Update hit box.
+     */
+    public void updateHitBox() {
+        hitbox.setBounds((int) (x - ((width - HITBOXOFFSET) / 2)),
+                (int) (y - ((height - HITBOXOFFSET) / 2)),
+                width - HITBOXOFFSET,
+                height - HITBOXOFFSET);
+    }
+
+    /**
+     * Gets hit box.
+     *
+     * @return the hit box
+     */
     public Rectangle getHitBox() {
-    	return hitbox;
+        return hitbox;
     }
 }

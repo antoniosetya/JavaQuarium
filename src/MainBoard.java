@@ -103,7 +103,7 @@ public class MainBoard extends JPanel implements ActionListener {
 			public void mousePressed(MouseEvent me) {
 				if (SwingUtilities.isLeftMouseButton(me) && isMouseInPlayArea(me)) {
 					// Determines if click is above a coin or not.
-					boolean success = overworld.CollectCoin(me.getX(), me.getY() - MenubarOffset);
+					boolean success = overworld.collectCoin(me.getX(), me.getY() - MenubarOffset);
 					if (!success) {
 						// Click is not above a coin -> drop FishFood if possible
 						if (overworld.getNumOfCoins() >= FishFoodPrice) {

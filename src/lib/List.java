@@ -1,27 +1,57 @@
 package lib;
 
+/**
+ * The type List.
+ *
+ * @param <T> the type parameter
+ */
 public class List<T> {
     private class ElmList<T> {
         private T data;
         private ElmList next;
 
+        /**
+         * Instantiates a new Elm list.
+         *
+         * @param info the info
+         */
         ElmList(final T info) {
             this.data = info;
             this.next = null;
         }
 
+        /**
+         * Gets data.
+         *
+         * @return the data
+         */
         public T getData() {
             return this.data;
         }
 
+        /**
+         * Gets next.
+         *
+         * @return the next
+         */
         public ElmList getNext() {
             return this.next;
         }
 
+        /**
+         * Sets data.
+         *
+         * @param info the info
+         */
         public void setData(final T info) {
             this.data = info;
         }
 
+        /**
+         * Sets next.
+         *
+         * @param n the n
+         */
         public void setNext(final ElmList n) {
             this.next = n;
         }
@@ -31,24 +61,48 @@ public class List<T> {
     private ElmList<T> last;
     private int size;
 
+    /**
+     * Instantiates a new List.
+     */
     public List() {
         first = null;
         last = null;
         size = 0;
     }
 
+    /**
+     * Gets first.
+     *
+     * @return the first
+     */
     public T getFirst() {
         return first.getData();
     }
 
+    /**
+     * Gets last.
+     *
+     * @return the last
+     */
     public T getLast() {
         return last.getData();
     }
 
+    /**
+     * Gets size.
+     *
+     * @return the size
+     */
     public int getSize() {
         return this.size;
     }
 
+    /**
+     * Find int.
+     *
+     * @param data the data
+     * @return the int
+     */
     public int find(final T data) {
         ElmList d = first;
         int index = 0;
@@ -65,10 +119,20 @@ public class List<T> {
         }
     }
 
+    /**
+     * Is empty boolean.
+     *
+     * @return the boolean
+     */
     public boolean isEmpty() {
         return (this.size == 0);
     }
 
+    /**
+     * Append.
+     *
+     * @param data the data
+     */
     public void append(final T data) {
         ElmList<T> d = new ElmList<T>(data);
         if (isEmpty()) {
@@ -83,6 +147,11 @@ public class List<T> {
         size++;
     }
 
+    /**
+     * Remove.
+     *
+     * @param data the data
+     */
     public void remove(final T data) {
         ElmList<T> d = first;
         ElmList<T> dTemp = null;
@@ -108,6 +177,11 @@ public class List<T> {
         }
     }
 
+    /**
+     * Remove at.
+     *
+     * @param i the
+     */
     public void removeAt(final int i) {
         ElmList<T> d = first;
         ElmList<T> prev = null;
@@ -123,13 +197,19 @@ public class List<T> {
                 }
                 prev.setNext(d.getNext());
                 if (index == size - 1) {
-                	last = prev;
+                    last = prev;
                 }
             }
             this.size--;
         }
     }
 
+    /**
+     * Get t.
+     *
+     * @param i the
+     * @return the t
+     */
     public T get(final int i) {
         ElmList<T> d = first;
         int index = 0;
@@ -138,24 +218,9 @@ public class List<T> {
             index++;
         }
         if (d == null) {
-        	return null;
+            return null;
+        } else {
+            return d.getData();
         }
-        else {
-        	return d.getData();
-        } 
-    }
-    
-    public static void main(String[] args) {
-    	List<Integer> test = new List<Integer>();
-    	test.append(5);
-    	test.append(10);
-    	test.append(15);
-    	test.removeAt(2);
-    	test.append(20);
-    	test.append(25);
-    	test.removeAt(0);
-    	for (int i = 0;i < test.getSize();i++) {
-    		System.out.println(test.get(i));
-    	}
     }
 }

@@ -165,20 +165,20 @@ public class AquariumTest {
 	}
 	
 	@Test
-	/* Used to test method CollectCoin() */
+	/* Used to test method collectCoin() */
 	public void testCollectCoin() {
 		long initial = test.getNumOfCoins();
 		test.getCoins().append(new Coin(150,250,30));
 		test.getCoins().append(new Coin(100,200,40));
 		test.getCoins().append(new Coin(300,100,50));
-		test.CollectCoin(50, 50);
+		test.collectCoin(50, 50);
 		assertEquals(test.getCoins().getSize(),3);
-		test.CollectCoin(99, 199);
+		test.collectCoin(99, 199);
 		assertFalse(test.getCoins().get(1).getIsAlive());
 		assertEquals(test.getNumOfCoins(),initial + 40);
-		test.CollectCoin(98, 198);
+		test.collectCoin(98, 198);
 		assertEquals(test.getNumOfCoins(),initial + 40);
-		test.CollectCoin(300, 99);
+		test.collectCoin(300, 99);
 		assertFalse(test.getCoins().get(2).getIsAlive());
 		assertEquals(test.getNumOfCoins(),initial + 90);
 	}

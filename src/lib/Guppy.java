@@ -3,6 +3,9 @@ package lib;
 import javax.swing.ImageIcon;
 import java.awt.Image;
 
+/**
+ * The type Guppy.
+ */
 public class Guppy extends Fish {
     private static final int GUPPY_SPEED = 35;
     private static final int INITIAL_COIN_TIME = 10;
@@ -25,6 +28,9 @@ public class Guppy extends Fish {
     private double coinDropTime;
     private Image gupSprite;
 
+    /**
+     * Instantiates a new Guppy.
+     */
     public Guppy() {
         super(0, 0, GUPPY_SPEED, THIRTY_SIX, THIRTY_TWO);
         setGrowthStage(INITIAL_GROWTH_STAGE);
@@ -34,6 +40,12 @@ public class Guppy extends Fish {
         draw();
     }
 
+    /**
+     * Instantiates a new Guppy.
+     *
+     * @param x the x
+     * @param y the y
+     */
     public Guppy(final double x, final double y) {
         super(x, y, GUPPY_SPEED, THIRTY_SIX, THIRTY_TWO);
         setGrowthStage(INITIAL_GROWTH_STAGE);
@@ -42,30 +54,58 @@ public class Guppy extends Fish {
         // Flush initial Image to gupSprite
         draw();
     }
-    
-    //Getter & Setter
+
+    /**
+     * Gets growth stage.
+     *
+     * @return the growth stage
+     */
+//Getter & Setter
     public int getGrowthStage() {
         return this.growthStage;
     }
 
+    /**
+     * Gets coin time left.
+     *
+     * @return the coin time left
+     */
     public double getCoinTimeLeft() {
         return this.coinDropTime;
     }
 
+    /**
+     * Gets num guppy.
+     *
+     * @return the num guppy
+     */
     public static int getNumGuppy() {
         return numGuppy;
     }
 
+    /**
+     * Sets growth stage.
+     *
+     * @param growthstage the growthstage
+     */
     public void setGrowthStage(final int growthstage) {
         this.growthStage = growthstage;
     }
 
+    /**
+     * Sets coin time left.
+     *
+     * @param coindroptime the coindroptime
+     */
     public void setCoinTimeLeft(final double coindroptime) {
         this.coinDropTime = coindroptime;
     }
 
 
-    // Method for Guppy to eat, move, and grow
+    /**
+     * Eat.
+     */
+// Method for Guppy to eat, move, and grow
     public void eat() {
         setFishFull(true);
         setNumEaten(getNumEaten() + 1);
@@ -77,30 +117,44 @@ public class Guppy extends Fish {
         setTimeBeforeDying(TWENTY);
     }
 
+    /**
+     * Grow.
+     */
     public void grow() {
         setGrowthStage(getGrowthStage() + 1);
         switch (this.getGrowthStage()) {
-	        case TWO:
-	            width = FIFTY_THREE;
-	            height = FORTY_SEVEN;
-	            break;
-	        case THREE:
-	            width = SEVENTY_ONE;
-	            height = SIXTY_THREE;
-	            break;
-	        default:
-	            width = THIRTY_SIX;
-	            height = THIRTY_TWO;
+            case TWO:
+                setWidth(FIFTY_THREE);
+                setHeight(FORTY_SEVEN);
+                break;
+            case THREE:
+                setWidth(SEVENTY_ONE);
+                setHeight(SIXTY_THREE);
+                break;
+            default:
+                setWidth(THIRTY_SIX);
+                setHeight(THIRTY_TWO);
         }
     }
 
-    // Coin
+    /**
+     * Drop coin coin.
+     *
+     * @return the coin
+     */
+// Coin
     public Coin dropCoin() {
         Coin c1 = new Coin(this.getX(), this.getY(),
                 this.getGrowthStage() * TEN);
         return c1;
     }
 
+    /**
+     * Countdown coin coin.
+     *
+     * @param dtime the dtime
+     * @return the coin
+     */
     public Coin countdownCoin(final double dtime) {
         if (getCoinTimeLeft() > 0) {
             this.setCoinTimeLeft(getCoinTimeLeft() - dtime);
@@ -111,7 +165,10 @@ public class Guppy extends Fish {
         }
     }
 
-    // Call this if Guppy is eaten
+    /**
+     * Eaten.
+     */
+// Call this if Guppy is eaten
     public void eaten() {
         setIsAlive(false);
     }

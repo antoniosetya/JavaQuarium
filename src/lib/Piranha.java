@@ -3,6 +3,9 @@ package lib;
 import javax.swing.ImageIcon;
 import java.awt.Image;
 
+/**
+ * The type Piranha.
+ */
 public class Piranha extends Fish {
     private static final int PIRANHA_SPEED = 40;
     private static final int GUPPY_PRICE = 100;
@@ -12,14 +15,29 @@ public class Piranha extends Fish {
     private static final int HEIGHT = 64;
     private Image pirSprite;
 
+    /**
+     * Instantiates a new Piranha.
+     */
     public Piranha() {
         super(0, 0, PIRANHA_SPEED, WIDTH, HEIGHT);
     }
 
+    /**
+     * Instantiates a new Piranha.
+     *
+     * @param x the x
+     * @param y the y
+     */
     public Piranha(final double x, final double y) {
         super(x, y, PIRANHA_SPEED, WIDTH, HEIGHT);
     }
 
+    /**
+     * Eat guppy coin.
+     *
+     * @param g the g
+     * @return the coin
+     */
     public Coin eatGuppy(final Guppy g) {
         g.eaten();
         setFishFull(true);
