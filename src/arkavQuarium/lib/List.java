@@ -1,4 +1,4 @@
-package arkavQuarium.lib;
+package arkavquarium.lib;
 
 /**
  * The type List.

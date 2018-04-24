@@ -1,4 +1,4 @@
-package arkavQuarium.lib;
+package arkavquarium.lib;
 
 import java.util.Random;
 import java.awt.Image;

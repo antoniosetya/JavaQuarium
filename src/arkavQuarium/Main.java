@@ -1,4 +1,4 @@
-package arkavQuarium;
+package arkavquarium;
 
 import java.awt.EventQueue;
 import javax.swing.JFrame;
@@ -12,7 +12,7 @@ public class Main extends JFrame {
 		getContentPane().add(main_board);
 		setResizable(false);
 		pack();
-		setTitle("ArkavQuarium");
+		setTitle("arkavquarium");
 		setLocationRelativeTo(null);
 		setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
 	}

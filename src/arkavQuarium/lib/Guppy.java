@@ -1,4 +1,4 @@
-package arkavQuarium.lib;
+package arkavquarium.lib;
 
 import javax.swing.ImageIcon;
 import java.awt.Image;

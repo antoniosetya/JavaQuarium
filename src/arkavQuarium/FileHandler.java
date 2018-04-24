@@ -1,4 +1,4 @@
-package arkavQuarium;
+package arkavquarium;
 
 import java.io.File;
 import java.io.FileNotFoundException;
@@ -6,7 +6,7 @@ import java.io.FileWriter;
 import java.io.IOException;
 import java.util.NoSuchElementException;
 import java.util.Scanner;
-import arkavQuarium.lib.*;
+import arkavquarium.lib.*;
 
 public class FileHandler {
 	private char mode;

@@ -1,4 +1,4 @@
-package arkavQuarium.lib;
+package arkavquarium.lib;
 
 import java.awt.Image;
 import java.awt.Rectangle;

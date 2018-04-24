@@ -1,4 +1,4 @@
-package arkavQuarium;
+package arkavquarium;
 
 import java.util.LinkedHashMap;
 import java.util.Map;
@@ -20,7 +20,7 @@ import javax.swing.JButton;
 import javax.swing.JFileChooser;
 import javax.swing.BorderFactory;
 import javax.swing.SwingUtilities;
-import arkavQuarium.lib.Aquarium;
+import arkavquarium.lib.Aquarium;
 
 public class MainBoard extends JPanel implements ActionListener {
 
@@ -294,7 +294,7 @@ public class MainBoard extends JPanel implements ActionListener {
 	
 	private void drawMainMenu() {
 		multipurpose = new JLabel();
-		multipurpose.setText("<html><h1 align=\"center\" style=\"color : blue;\">ArkavQuarium</h1></html>");
+		multipurpose.setText("<html><h1 align=\"center\" style=\"color : blue;\">arkavquarium</h1></html>");
 		multipurpose.setBounds(235,0,180,50);
 		multipurpose.setVisible(true);
 		add(multipurpose);
