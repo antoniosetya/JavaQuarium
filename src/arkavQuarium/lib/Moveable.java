@@ -1,5 +1,13 @@
 package arkavquarium.lib;
 
+/**
+ * The interface Moveable.
+ */
 interface Moveable {
-	void move(double x);
+    /**
+     * Move toward x direction.
+     *
+     * @param x absis for movement
+     */
+    void move(double x);
 }
