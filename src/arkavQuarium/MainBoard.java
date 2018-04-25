@@ -558,7 +558,7 @@ public class MainBoard extends JPanel implements ActionListener {
     private void drawMainMenu() {
         multipurpose = new JLabel();
         multipurpose.setText("<html><h1 align=\"center\" style=\"color"
-                + " : blue;\">arkavquarium</h1></html>");
+                + " : blue;\">ArkavQuarium</h1></html>");
         multipurpose.setBounds(TWO_THREE_FIVE, 0, ONE_EIGHT_ZERO, FIFTY);
         multipurpose.setVisible(true);
         add(multipurpose);

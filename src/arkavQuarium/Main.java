@@ -21,7 +21,7 @@ public class Main extends JFrame {
         getContentPane().add(mainBoard);
         setResizable(false);
         pack();
-        setTitle("arkavquarium");
+        setTitle("ArkavQuarium");
         setLocationRelativeTo(null);
         setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
     }
