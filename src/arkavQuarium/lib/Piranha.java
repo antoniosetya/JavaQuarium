@@ -1,6 +1,9 @@
 package arkavquarium.lib;
 
 import javax.swing.ImageIcon;
+
+import arkavquarium.Main;
+
 import java.awt.Image;
 
 /**
@@ -82,8 +85,15 @@ public class Piranha extends Fish {
         } else {
             state = "h";
         }
-        filename = "Piranha_" + state + "_" + this.getFacing() + ".png";
-        pirSprite = (new ImageIcon("./assets/" + filename)).getImage();
+        filename = "assets/Piranha_" + state + "_" + this.getFacing() + ".png";
+        filename = Main.class.getClassLoader().getResource(filename).getPath();
+    	try {
+    		filename = java.net.URLDecoder.decode(filename, "UTF-8");
+    	}
+    	catch (Exception e) {
+    		System.out.println("Failed to load Piranha assets...");
+    	}
+        pirSprite = (new ImageIcon(filename)).getImage();
         return pirSprite;
     }
 }

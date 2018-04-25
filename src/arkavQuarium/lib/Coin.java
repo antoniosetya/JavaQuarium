@@ -3,6 +3,8 @@ package arkavquarium.lib;
 import java.awt.Image;
 import javax.swing.ImageIcon;
 
+import arkavquarium.Main;
+
 /**
  * The type Coin.
  */
@@ -66,11 +68,20 @@ public class Coin extends AqObject implements Moveable{
      * Load the sprite.
      */
     private void loadSprite() {
-        if (value >= ONE_HUNDRED) {
-            coinSprite = (new ImageIcon("./assets/Diamond.png")).getImage();
+    	String filename;
+    	if (value >= ONE_HUNDRED) {
+            filename = "assets/Diamond.png";
         } else {
-            coinSprite = (new ImageIcon("./assets/Coin.png")).getImage();
+            filename = "assets/Coin.png";
         }
+    	filename = Main.class.getClassLoader().getResource(filename).getPath();
+    	try {
+    		filename = java.net.URLDecoder.decode(filename, "UTF-8");
+    	}
+    	catch (Exception e) {
+    		System.out.println("Failed to load Coin assets...");
+    	}
+    	coinSprite = (new ImageIcon(filename)).getImage();
     }
 
     /**

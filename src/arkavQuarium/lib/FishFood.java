@@ -1,6 +1,9 @@
 package arkavquarium.lib;
 
 import javax.swing.ImageIcon;
+
+import arkavquarium.Main;
+
 import java.awt.Image;
 
 /**
@@ -49,8 +52,14 @@ public class FishFood extends AqObject implements Moveable {
      * Load sprite.
      */
     private void loadSprite() {
-        ImageIcon temp = new ImageIcon("./assets/FishFood.png");
-        ffsprite = temp.getImage();
+    	String filename = Main.class.getClassLoader().getResource("assets/FishFood.png").getPath();
+    	try {
+    		filename = java.net.URLDecoder.decode(filename, "UTF-8");
+    	}
+    	catch (Exception e) {
+    		System.out.println("Failed to load FishFood assets...");
+    	}
+        ffsprite = (new ImageIcon(filename)).getImage();
     }
 
     /**

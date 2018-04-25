@@ -1,6 +1,9 @@
 package arkavquarium.lib;
 
 import javax.swing.ImageIcon;
+
+import arkavquarium.Main;
+
 import java.awt.Image;
 import java.util.Random;
 
@@ -238,8 +241,15 @@ public class Siput extends AqObject implements Moveable {
      * @return image drawn
      */
     public Image draw() {
-        String filename = "Snail_" + getFacing() + ".png";
-        sipSprite = (new ImageIcon("./assets/" + filename)).getImage();
+        String filename = "assets/Snail_" + getFacing() + ".png";
+        filename = Main.class.getClassLoader().getResource(filename).getPath();
+    	try {
+    		filename = java.net.URLDecoder.decode(filename, "UTF-8");
+    	}
+    	catch (Exception e) {
+    		System.out.println("Failed to load Siput assets...");
+    	}
+        sipSprite = (new ImageIcon(filename)).getImage();
         return sipSprite;
     }
 }

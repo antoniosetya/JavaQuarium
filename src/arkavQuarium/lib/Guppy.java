@@ -1,6 +1,9 @@
 package arkavquarium.lib;
 
 import javax.swing.ImageIcon;
+
+import arkavquarium.Main;
+
 import java.awt.Image;
 
 /**
@@ -242,9 +245,16 @@ public class Guppy extends Fish {
         } else {
             state = "h";
         }
-        filename = this.getGrowthStage() + "_Guppy_" + state
+        filename = "assets/" + this.getGrowthStage() + "_Guppy_" + state
                 + "_" + this.getFacing() + ".png";
-        gupSprite = (new ImageIcon("./assets/" + filename)).getImage();
+        filename = Main.class.getClassLoader().getResource(filename).getPath();
+    	try {
+    		filename = java.net.URLDecoder.decode(filename, "UTF-8");
+    	}
+    	catch (Exception e) {
+    		System.out.println("Failed to load Guppy assets...");
+    	}
+        gupSprite = (new ImageIcon(filename)).getImage();
         return gupSprite;
     }
 }
