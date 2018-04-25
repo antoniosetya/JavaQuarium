@@ -6,7 +6,7 @@ import javax.swing.ImageIcon;
 /**
  * The type Coin.
  */
-public class Coin extends AqObject {
+public class Coin extends AqObject implements Moveable{
     /**
      * Variable for coin's value.
      */

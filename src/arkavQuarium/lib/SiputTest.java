@@ -1,4 +1,4 @@
-package arkavQuarium.lib;
+package arkavquarium.lib;
 
 import arkavquarium.lib.Siput;
 import org.junit.Test;
