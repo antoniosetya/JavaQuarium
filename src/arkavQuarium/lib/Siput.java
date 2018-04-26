@@ -243,12 +243,11 @@ public class Siput extends AqObject implements Moveable {
     public Image draw() {
         String filename = "assets/Snail_" + getFacing() + ".png";
         filename = Main.class.getClassLoader().getResource(filename).getPath();
-    	try {
-    		filename = java.net.URLDecoder.decode(filename, "UTF-8");
-    	}
-    	catch (Exception e) {
-    		System.out.println("Failed to load Siput assets...");
-    	}
+        try {
+            filename = java.net.URLDecoder.decode(filename, "UTF-8");
+        } catch (Exception e) {
+            System.out.println("Failed to load Siput assets...");
+        }
         sipSprite = (new ImageIcon(filename)).getImage();
         return sipSprite;
     }

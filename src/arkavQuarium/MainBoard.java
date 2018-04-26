@@ -9,8 +9,6 @@ import java.awt.Dimension;
 import java.awt.event.ActionListener;
 import java.awt.event.ActionEvent;
 import java.awt.event.MouseEvent;
-import java.io.File;
-import java.nio.file.Paths;
 import java.awt.event.MouseAdapter;
 import javax.swing.JPanel;
 import javax.swing.JTextArea;
@@ -346,13 +344,13 @@ public class MainBoard extends JPanel implements ActionListener {
      * Load background.
      */
     private void loadBackground() {
-    	String filename = Main.class.getClassLoader().getResource("assets/background.jpg").getPath();
-    	try {
-    		filename = java.net.URLDecoder.decode(filename, "UTF-8");
-    	}
-    	catch (Exception e) {
-    		System.out.println("Failed to load background assets...");
-    	}
+        String filename = Main.class.getClassLoader().
+                getResource("assets/background.jpg").getPath();
+        try {
+            filename = java.net.URLDecoder.decode(filename, "UTF-8");
+        } catch (Exception e) {
+            System.out.println("Failed to load background assets...");
+        }
         background = (new ImageIcon(filename)).getImage();
     }
 

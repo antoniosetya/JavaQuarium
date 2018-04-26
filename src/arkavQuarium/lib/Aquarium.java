@@ -292,7 +292,7 @@ public class Aquarium {
     }
 
     /**
-     * Keep on aquarium.
+     * Calcuate distance between 2 coordinate.
      *
      * @param x1 the first absis
      * @param y1 the first ordinat

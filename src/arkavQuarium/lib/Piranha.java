@@ -87,12 +87,11 @@ public class Piranha extends Fish {
         }
         filename = "assets/Piranha_" + state + "_" + this.getFacing() + ".png";
         filename = Main.class.getClassLoader().getResource(filename).getPath();
-    	try {
-    		filename = java.net.URLDecoder.decode(filename, "UTF-8");
-    	}
-    	catch (Exception e) {
-    		System.out.println("Failed to load Piranha assets...");
-    	}
+        try {
+            filename = java.net.URLDecoder.decode(filename, "UTF-8");
+        } catch (Exception e) {
+            System.out.println("Failed to load Piranha assets...");
+        }
         pirSprite = (new ImageIcon(filename)).getImage();
         return pirSprite;
     }

@@ -52,13 +52,13 @@ public class FishFood extends AqObject implements Moveable {
      * Load sprite.
      */
     private void loadSprite() {
-    	String filename = Main.class.getClassLoader().getResource("assets/FishFood.png").getPath();
-    	try {
-    		filename = java.net.URLDecoder.decode(filename, "UTF-8");
-    	}
-    	catch (Exception e) {
-    		System.out.println("Failed to load FishFood assets...");
-    	}
+        String filename = Main.class.getClassLoader().
+                getResource("assets/FishFood.png").getPath();
+        try {
+            filename = java.net.URLDecoder.decode(filename, "UTF-8");
+        } catch (Exception e) {
+            System.out.println("Failed to load FishFood assets...");
+        }
         ffsprite = (new ImageIcon(filename)).getImage();
     }
 

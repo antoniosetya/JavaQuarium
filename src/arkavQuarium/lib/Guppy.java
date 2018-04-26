@@ -248,12 +248,11 @@ public class Guppy extends Fish {
         filename = "assets/" + this.getGrowthStage() + "_Guppy_" + state
                 + "_" + this.getFacing() + ".png";
         filename = Main.class.getClassLoader().getResource(filename).getPath();
-    	try {
-    		filename = java.net.URLDecoder.decode(filename, "UTF-8");
-    	}
-    	catch (Exception e) {
-    		System.out.println("Failed to load Guppy assets...");
-    	}
+        try {
+            filename = java.net.URLDecoder.decode(filename, "UTF-8");
+        } catch (Exception e) {
+            System.out.println("Failed to load Guppy assets...");
+        }
         gupSprite = (new ImageIcon(filename)).getImage();
         return gupSprite;
     }
